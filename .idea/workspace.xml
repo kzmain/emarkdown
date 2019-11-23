@@ -12,7 +12,7 @@
     <SUITE FILE_PATH="coverage/emd$ImageProcessor.coverage" NAME="ImageProcessor Coverage Results" MODIFIED="1574389230129" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/emd/Processor/Inline" />
     <SUITE FILE_PATH="coverage/emd$BlockQuotesProcessor.coverage" NAME="BlockQuotesProcessor Coverage Results" MODIFIED="1574048069701" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/emd/Processor/Block" />
     <SUITE FILE_PATH="coverage/emd$markdown.coverage" NAME="markdown Coverage Results" MODIFIED="1574036427441" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/emd" />
-    <SUITE FILE_PATH="coverage/emd$__main__.coverage" NAME="__main__ Coverage Results" MODIFIED="1574514216437" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../emarkdown/emarkdown" />
+    <SUITE FILE_PATH="coverage/emd$__main__.coverage" NAME="__main__ Coverage Results" MODIFIED="1574514826380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../emarkdown/emarkdown" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -28,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../emarkdown/emarkdown/Processor/ConverterController.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="46" column="38" selection-start-line="46" selection-start-column="38" selection-end-line="46" selection-end-column="38" />
+            <state relative-caret-position="171">
+              <caret line="47" selection-start-line="47" selection-end-line="47" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -238,11 +238,6 @@
           <expand>
             <path>
               <item name="emarkdown" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emarkdown" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="emarkdown" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emarkdown" type="462c0819:PsiDirectoryNode" />
               <item name="emarkdown" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -570,12 +565,12 @@
       <option name="presentableId" value="Default" />
       <updated>1574022763510</updated>
       <workItem from="1574022764695" duration="128939000" />
-      <workItem from="1574383226618" duration="59381000" />
+      <workItem from="1574383226618" duration="59920000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="188320000" />
+    <option name="totallyTimeSpent" value="188859000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="963" extended-state="6" />
@@ -590,9 +585,9 @@
       <window_info anchor="bottom" id="Python Console" order="4" />
       <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Find" order="7" visible="true" weight="0.326062" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.326062" />
       <window_info anchor="bottom" id="Run" order="8" weight="0.32914287" />
-      <window_info anchor="bottom" id="Debug" order="9" weight="0.29965556" />
+      <window_info anchor="bottom" id="Debug" order="9" visible="true" weight="0.29965556" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="12" />
@@ -910,8 +905,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../emarkdown/emarkdown/Processor/ConverterController.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="46" column="38" selection-start-line="46" selection-start-column="38" selection-end-line="46" selection-end-column="38" />
+        <state relative-caret-position="171">
+          <caret line="47" selection-start-line="47" selection-end-line="47" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

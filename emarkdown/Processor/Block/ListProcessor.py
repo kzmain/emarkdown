@@ -23,18 +23,34 @@ class ListProcessor(BasicProcessor):
     # ordered_regx = r"((?<=\n)|(?<!\W|\w))( )*(\d.)( )+.+"
     # This only match a element of a list
     ordered_regx = r"(\n)?(\d\.)( )+.*(\n(?!(\d\.)|\*).*)*"
-    unordered_regx = r"(\n)?(\*|\-|\+)( )+.*(\n(?!(\d\.)|\*).*)*"
-
+    unordered_regx = r"(\n)?(\*|\-|\+)( )+.*(\n(?!(\d\.)|\*|\-|\+).*)*"
+    # Match space before list symbol to repalce
+    space_regx = r"^( ){%d,%d}(?=\*|\+|\-|\d\.)"
     ls_num = 2
 
     def __init__(self):
         pass
 
     def __reformat_list(self, input_text):
-        # space_num_pre = 0
+        input_text = input_text.replace("\t", "    ")
+        space_set = {0}
+        for line_text in input_text.splitlines():
+            space_match = re.match("^( )*", line_text)
+            space_count = len(line_text[space_match.start():space_match.end()])
+            if space_count % 2 != 0:
+                space_count += 1
+            space_set.add(space_count)
+        space_set = sorted(space_set)
+        space_l = 0
+        for space_num in space_set:
+            if space_num == 0:
+                continue
+            space_l += 1
+            input_text = re.sub(self.space_regx % (space_num - 1, space_num), " " * space_l * self.ls_num, input_text,
+                                flags=re.MULTILINE)
+
         space_num = -1
         result_text = ""
-        input_text = input_text.replace("\t", "    ")
         for line in input_text.splitlines():
             space_match = re.match("^( )*", line)
             line_text = line[space_match.end():]
@@ -58,7 +74,6 @@ class ListProcessor(BasicProcessor):
                 elif line_space < space_num and len(line_text) != 0:
                     space_num = (line_space % self.ls_num) + line_space + self.ls_num
                 result_text += (space_num * " ") + line_text + "\n"
-            # space_num_pre = line_space
         result_text = re.sub(r"(\n)$", "", result_text)
         return result_text
 
@@ -73,7 +88,8 @@ class ListProcessor(BasicProcessor):
             text_dict = copy.deepcopy(temp_dict)
             for level, level_dict in text_dict.items():
                 for key_uuid, text in level_dict.items():
-                    sub_list_block_regx = self.sub_list_block_regex % (self.ls_num * (level + 1), self.ls_num * (level + 1))
+                    sub_list_block_regx = self.sub_list_block_regex % (
+                        self.ls_num * (level + 1), self.ls_num * (level + 1))
                     match = re.search(sub_list_block_regx, text)
                     while match:
                         checking_flag = True
@@ -82,9 +98,8 @@ class ListProcessor(BasicProcessor):
 
                         before_text = text[:match.start()]
                         after_text = text[match.end():]
-                        # text = text.replace(block_text, new_key, 1)
-                        block_text = re.sub("^( ){%d}" % self.ls_num * (level + 1), "", block_text)
-                        block_text = re.sub("(\n( ){%d})" % self.ls_num * (level + 2), "\n", block_text)
+
+                        block_text = re.sub("^( ){%d}" % self.ls_num * (level + 1), "", block_text, flags=re.MULTILINE)
 
                         text = before_text + " " * self.ls_num + new_key + after_text
                         text_dict[level][key_uuid] = text
@@ -144,18 +159,20 @@ class ListProcessor(BasicProcessor):
                 new_text = ""
                 while old_text != "":
                     old_text = re.sub("^( )*", "", old_text)
-                    or_match = re.match(self.ordered_regx, old_text)
-                    un_match = re.match(self.unordered_regx, old_text)
+                    or_match = re.search(self.ordered_regx, old_text, re.MULTILINE)
+                    un_match = re.search(self.unordered_regx, old_text, re.MULTILINE)
                     match_text = ""
                     if or_match:
                         match_text = old_text[:or_match.end()]
                         match_text = re.sub(r"^\n", "", match_text)
+                        # match_text = re.sub(r"^( )*", "\n", match_text, flags=re.MULTILINE)
                         # match_text = re.sub(r"^\d\.( )*", "", match_text)
                         old_text = old_text[or_match.end():]
                         list_type_cur = TagTypes.TYPE_LIST_Ol
                     elif un_match:
                         match_text = old_text[:un_match.end()]
                         match_text = re.sub("^\n", "", match_text)
+                        # match_text = re.sub(r"^\n( )*", "\n", match_text, flags=re.MULTILINE)
                         # match_text = re.sub(r"^([*\-\+])( )*", "", match_text)
                         list_type_cur = TagTypes.TYPE_LIST_UL
                         old_text = old_text[un_match.end():]

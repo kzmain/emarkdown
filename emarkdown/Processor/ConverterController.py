@@ -8,10 +8,13 @@ from emarkdown.System import HTML_Entities
 
 
 class ConverterController:
+    basic_space_unit = 2
+
     def __init__(self):
         pass
 
     def process(self, md_dict, unmd_dict):
+        # basic_space_unit = 2
         main_text = md_dict[0][0][Config.KEY_TEXT]
         md_dict[0].pop(0)
         md_dict.pop(0)
@@ -30,10 +33,11 @@ class ConverterController:
                     tag_type = tag_dict[Config.KEY_TYPE]
                     if l_uuid in main_text:
                         if not tag_inline:
-                            space_num = loop_count + level - 1
-                            tag_text = re.sub("^", " " * space_num * 2, tag_text, flags=re.MULTILINE)
+                            space_level = loop_count + level - 1
+                            tag_text = re.sub("^", " " * space_level * self.basic_space_unit, tag_text,
+                                              flags=re.MULTILINE)
                         if tag_type == TagTypes.TYPE_TABLE_TD or tag_type == TagTypes.TYPE_TABLE_TH:
-                            tag_text = " " * 2 + tag_text
+                            tag_text = " " * self.basic_space_unit + tag_text
                         main_text = main_text.replace(l_uuid, tag_text)
                         tp_dict[level].pop(l_uuid)
                         if len(tp_dict[level]) == 0:
@@ -49,8 +53,7 @@ class ConverterController:
         print()
         print()
 
-    @staticmethod
-    def update_md_dict(input_dict):
+    def update_md_dict(self, input_dict):
         for level, level_dict in input_dict.items():
             for t_uuid, tag_dict in level_dict.items():
                 # Block
@@ -67,16 +70,19 @@ class ConverterController:
                     tag_type = tag_dict[Config.KEY_TYPE]
                     tag_l = tag_type + "\n"
                     tag_r = "\n" + tag_l.replace("<", "</", 1).replace("\n", "")
+                    tag_text = input_dict[level][t_uuid][Config.KEY_TEXT]
+                    header_match = re.match(r"^<h\d", tag_type)
                     if tag_type == TagTypes.TYPE_SYMMETRY_BLOCK:
                         tag_l = tag_dict[Config.KEY_SUB_TYPE] % tag_dict[Config.KEY_EXTENSION].lower() + "\n"
                         tag_r = "\n" + tag_l.split(" ")[0] + ">"
                     # If header
-                    elif re.match("^<h", tag_type):
-                        tag_l = tag_type
-                        tag_r = tag_l.replace("<", "</", 1).replace("\n", "")
-                    tag_text = input_dict[level][t_uuid][Config.KEY_TEXT]
+                    elif header_match:
+                        tag_l = tag_type % tag_text.lower().replace(" ", "-")
+                        tag_r = tag_type[:header_match.end()] + ">"
+                        tag_r = tag_r.replace("<", "</", 1).replace("\n", "")
                     if tag_type == TagTypes.TYPE_PARAGRAPH:
                         tag_text = tag_text.replace("\n", "<br />\n")
+                        tag_text = re.sub("^", " " * self.basic_space_unit, tag_text, flags=re.MULTILINE)
                     input_dict[level][t_uuid][Config.KEY_TEXT] = tag_l + tag_text + tag_r
 
                 # Inline
@@ -123,8 +129,8 @@ class ConverterController:
             if not tag_dict[Config.KEY_INLINE_FLAG]:
                 if tag_dict[Config.KEY_SUB_TYPE] == TagTypes.TYPE_CODE_BLOCK:
                     tag_text = input_dict[t_uuid][Config.KEY_TEXT]
-                    tag_text = tag_text\
-                        .replace("<", HTML_Entities.ENTITY_DICT["<"])\
+                    tag_text = tag_text \
+                        .replace("<", HTML_Entities.ENTITY_DICT["<"]) \
                         .replace(">", HTML_Entities.ENTITY_DICT[">"])
                     extension = tag_dict[Config.KEY_EXTENSION].lower().strip()
                     if extension == "":

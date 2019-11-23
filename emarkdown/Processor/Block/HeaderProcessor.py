@@ -36,7 +36,7 @@ class HeaderProcessor(BasicProcessor):
 
                         header_type_match = re.search("#{1,6}( )*", header_text)
                         number_sign = header_text[header_type_match.start():header_type_match.end()].replace(" ", "")
-                        header_type = "<h" + str(len(number_sign)) + ">"
+                        header_type = "<h" + str(len(number_sign)) + " id = \"%s\">"
 
                         header_text = header_text[header_type_match.end():]
 
@@ -70,7 +70,7 @@ class HeaderProcessor(BasicProcessor):
 
                         match_text_list = match_text.split("\n")
                         heading_type = str(1) if "=" in match_text_list[1] else str(2)
-                        header_type = "<h" + heading_type + ">"
+                        header_type = "<h" + heading_type + " id = \"%s\">"
 
                         header_text = match_text_list[0]
 

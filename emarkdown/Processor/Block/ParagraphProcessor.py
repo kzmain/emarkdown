@@ -2,7 +2,7 @@ import copy
 import re
 
 from emarkdown.Processor.BasicProcessor import BasicProcessor
-from emarkdown.System import UUID
+from emarkdown.System import UUID, HTML_Entities
 from emarkdown.Processor.Config import TagConfig as con, TagTypes
 
 
@@ -25,12 +25,13 @@ class ParagraphProcessor(BasicProcessor):
                         or tag_type == TagTypes.TYPE_SYMMETRY_BLOCK:
                     while p_match:
                         p_text = in_text[p_match.start(): p_match.end()]
-                        p_text = re.sub("^\n", "", p_text)
                         before_text = in_text[: p_match.start()]
                         after_text = in_text[p_match.end():]
-
                         p_text = re.sub("^\n", "", p_text, 1)
-
+                        ## ！！！！！！！！！！！！If accept pure html
+                        if True:
+                            p_text = p_text.replace("<", HTML_Entities.ENTITY_DICT["<"])
+                            p_text = p_text.replace(">", HTML_Entities.ENTITY_DICT[">"])
                         # Replace
                         new_insert_dict = copy.deepcopy(con.insert_dict)
                         new_uuid = UUID.get_new_uuid()

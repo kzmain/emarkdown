@@ -4,6 +4,7 @@ import re
 
 from emarkdown.Processor.Config import TagConfig as Config, TagTypes
 from emarkdown.Processor.Inline.Media.MediaProcessor import MediaProcessor
+from emarkdown.System import HTML_Entities
 
 
 class ConverterController:
@@ -54,6 +55,7 @@ class ConverterController:
             for t_uuid, tag_dict in level_dict.items():
                 # Block
                 if not tag_dict[Config.KEY_INLINE_FLAG]:
+
                     if tag_dict[Config.KEY_TYPE] == TagTypes.TYPE_HEADER \
                             or tag_dict[Config.KEY_TYPE] == TagTypes.TYPE_LIST:
                         input_dict[level][t_uuid][Config.KEY_TYPE] = input_dict[level][t_uuid][Config.KEY_SUB_TYPE]
@@ -72,7 +74,11 @@ class ConverterController:
                     elif re.match("^<h", tag_type):
                         tag_l = tag_type
                         tag_r = tag_l.replace("<", "</", 1).replace("\n", "")
-                    input_dict[level][t_uuid][Config.KEY_TEXT] = tag_l + input_dict[level][t_uuid][Config.KEY_TEXT] + tag_r
+                    tag_text = input_dict[level][t_uuid][Config.KEY_TEXT]
+                    if tag_type == TagTypes.TYPE_PARAGRAPH:
+                        tag_text = tag_text.replace("\n", "<br />\n")
+                    input_dict[level][t_uuid][Config.KEY_TEXT] = tag_l + tag_text + tag_r
+
                 # Inline
                 else:
                     tag_text = input_dict[level][t_uuid][Config.KEY_TEXT]
@@ -116,6 +122,10 @@ class ConverterController:
         for t_uuid, tag_dict in input_dict.items():
             if not tag_dict[Config.KEY_INLINE_FLAG]:
                 if tag_dict[Config.KEY_SUB_TYPE] == TagTypes.TYPE_CODE_BLOCK:
+                    tag_text = input_dict[t_uuid][Config.KEY_TEXT]
+                    tag_text = tag_text\
+                        .replace("<", HTML_Entities.ENTITY_DICT["<"])\
+                        .replace(">", HTML_Entities.ENTITY_DICT[">"])
                     extension = tag_dict[Config.KEY_EXTENSION].lower().strip()
                     if extension == "":
                         tag_l = "<pre lang=\"no-highlight\">\n<code>"
@@ -123,9 +133,12 @@ class ConverterController:
                     else:
                         tag_l = "<div class=\"highlight highlight-source-%s\">\n<pre>" % extension
                         tag_r = "</pre>\n</div>"
-                    input_dict[t_uuid] = tag_l + input_dict[t_uuid][Config.KEY_TEXT] + tag_r
+                    input_dict[t_uuid] = tag_l + tag_text + tag_r
             else:
                 tag_text = input_dict[t_uuid][Config.KEY_TEXT]
+                tag_text = tag_text \
+                    .replace("<", HTML_Entities.ENTITY_DICT["<"]) \
+                    .replace(">", HTML_Entities.ENTITY_DICT[">"])
                 tag_type = tag_dict[Config.KEY_TYPE]
                 tag_sub_type = tag_dict[Config.KEY_SUB_TYPE]
 

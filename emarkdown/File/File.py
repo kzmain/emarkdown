@@ -119,16 +119,16 @@ def get_dest_file_uri(argv_list):
         return dest_uri
     except IndexError:
         logging.error("Destination location is required.")
-        exit(1)
+        return None
     except FileNotFoundError:
         logging.error("Destination location \"%s\" cannot be found." % dest_uri)
-        exit(1)
+        return None
     except InputFileTypeNotCorrectError:
         logging.error("Destination location \"%s\" is not accepted." % dest_uri)
-        exit(1)
+        return None
     except FileAccessModeNotCorrectError:
         logging.error("Destination \"%s\" is not writable." % dest_uri)
-        exit(1)
+        return None
 
 
 def get_lib_uri(argv_list):

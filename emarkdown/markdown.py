@@ -18,6 +18,11 @@ def process(argv_list):
         md_dict, unmd_dict, citations_dict = extractor.process(res_uri)
         converter = ConverterController()
         html_text = converter.process(md_dict, unmd_dict)
+        if dest_uri is not None:
+            export = open(dest_uri, "w+")
+            export.write(html_text)
+            export.close()
+        return html_text
 
     elif mode_dict[Mode.KEY_SYS_MODE] == Mode.MODE_CHANGE_LIB:
         lib_uri = File.get_lib_uri(argv_list)

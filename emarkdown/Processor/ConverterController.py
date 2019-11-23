@@ -50,8 +50,8 @@ class ConverterController:
                 if l_uuid in main_text:
                     main_text = main_text.replace(l_uuid, tag_text)
                     tp_dict.pop(l_uuid)
-        print()
-        print()
+
+        return main_text
 
     def update_md_dict(self, input_dict):
         for level, level_dict in input_dict.items():
@@ -100,13 +100,17 @@ class ConverterController:
                         title = ext_dict[MediaProcessor.KEY_TITLE]
                         m_type = pathlib.Path(link).suffix.replace(".", "", 1)
                         if tag_type == TagTypes.TYPE_LINK:
-                            input_dict[level][t_uuid][Config.KEY_TEXT] = TagTypes.TYPE_LINK % (link, title, tag_text)
+                            input_dict[level][t_uuid][Config.KEY_TEXT] = TagTypes.TYPE_LINK % \
+                                                                         (link, title, tag_text)
                         elif tag_type == TagTypes.TYPE_IMAGE:
-                            input_dict[level][t_uuid][Config.KEY_TEXT] = TagTypes.TYPE_IMAGE % (link, alt, title)
+                            input_dict[level][t_uuid][Config.KEY_TEXT] = TagTypes.TYPE_IMAGE % \
+                                                                         (link, alt, title)
                         elif tag_type == TagTypes.TYPE_AUDIO:
-                            input_dict[level][t_uuid][Config.KEY_TEXT] = TagTypes.TYPE_IMAGE % (link, m_type, alt, title)
+                            input_dict[level][t_uuid][Config.KEY_TEXT] = TagTypes.TYPE_IMAGE % \
+                                                                         (link, m_type, alt, title)
                         elif tag_dict[Config.KEY_TYPE] == TagTypes.TYPE_VIDEO:
-                            input_dict[level][t_uuid][Config.KEY_TEXT] = TagTypes.TYPE_IMAGE % (link, m_type, alt, title)
+                            input_dict[level][t_uuid][Config.KEY_TEXT] = TagTypes.TYPE_IMAGE % \
+                                                                         (link, m_type, alt, title)
                         continue
                     tag_l = tag_type
                     tag_r = tag_type.replace("<", "</", 1)

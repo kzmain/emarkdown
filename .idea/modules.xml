@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/emd.iml" filepath="$PROJECT_DIR$/.idea/emd.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../emarkdown/.idea/emarkdown.iml" filepath="$PROJECT_DIR$/../emarkdown/.idea/emarkdown.iml" />
     </modules>
   </component>
 </project>

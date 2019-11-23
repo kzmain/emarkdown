@@ -70,7 +70,7 @@ class HeaderProcessor(BasicProcessor):
 
                         match_text_list = match_text.split("\n")
                         heading_type = str(1) if "=" in match_text_list[1] else str(2)
-                        header_type = "h" + heading_type
+                        header_type = "<h" + heading_type + ">"
 
                         header_text = match_text_list[0]
 
@@ -79,7 +79,8 @@ class HeaderProcessor(BasicProcessor):
                         insert_dict[con.KEY_INLINE_FLAG] = True
                         insert_dict[con.KEY_TYPE] = self.tag_name
                         insert_dict[con.KEY_TEXT] = header_text
-                        insert_dict[con.KEY_EXTENSION] = header_type
+                        insert_dict[con.KEY_EXTENSION] = ""
+                        insert_dict[con.KEY_SUB_TYPE] = header_type
                         insert_dict[con.KEY_UUID] = new_uuid
 
                         store_level = l_level + 1

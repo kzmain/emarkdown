@@ -76,7 +76,7 @@ class ExtractController:
         md_dict = self.processor_dict["header_processor"].process_tag(md_dict)
         md_dict = self.processor_dict["horizontal_rule_processor"].process_tag(md_dict)
         # audio/video/image tag/quotation/link html（避免之前的冲突）/
-        ref_dict, md_dict = self.processor_dict["media_processor"].get_all_reference(md_dict)
+        md_dict, ref_dict = self.processor_dict["media_processor"].get_all_reference(md_dict)
         md_dict = self.processor_dict["image_processor"].process_tag(md_dict, ref_dict)
         md_dict = self.processor_dict["audio_processor"].process_tag(md_dict, ref_dict)
         md_dict = self.processor_dict["video_processor"].process_tag(md_dict, ref_dict)

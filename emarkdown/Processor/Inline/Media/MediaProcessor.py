@@ -67,7 +67,7 @@ class MediaProcessor(BasicProcessor):
             input_text = before_text + after_text
             reference_match = re.search(self.reference_regx, input_text, re.MULTILINE)
         md_dicts[0][0][con.KEY_TEXT] = input_text
-        return ref_dict, md_dicts
+        return md_dicts, ref_dict
 
     @abstractmethod
     def process_tag(self, md_dicts, ref_dict):

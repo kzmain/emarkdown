@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ed2ac6e-f157-454f-8a04-81fdf4d01d47" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/emarkdown/www/dark/Dark_HTML.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emarkdown/Processor/ConverterController.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/Processor/ConverterController.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emarkdown/Processor/Inline/CitationProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/Processor/Inline/CitationProcessor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emarkdown/markdown.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/markdown.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emarkdown/Processor/ExtractController.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/Processor/ExtractController.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emarkdown/Processor/Inline/Media/MediaProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/Processor/Inline/Media/MediaProcessor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emarkdown/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/test.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,108 +21,6 @@
     <SUITE FILE_PATH="coverage/emd$markdown.coverage" NAME="markdown Coverage Results" MODIFIED="1574036427441" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/emd" />
     <SUITE FILE_PATH="coverage/emd$__main__.coverage" NAME="__main__ Coverage Results" MODIFIED="1574539299782" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/emarkdown" />
   </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emarkdown/Processor/ExtractController.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-296">
-              <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="58" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/emarkdown/Processor/ConverterController.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2400">
-              <caret line="183" column="22" selection-start-line="183" selection-start-column="18" selection-end-line="183" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#702#1778#0" />
-                <element signature="e#1869#2106#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Inline/CitationProcessor.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="23" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="23" />
-              <folding>
-                <element signature="e#24#33#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emarkdown/markdown.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="25" column="50" selection-start-line="25" selection-start-column="50" selection-end-line="25" selection-end-column="50" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emarkdown/System/HTML_Entities.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Block/TableProcessor.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="53" column="61" selection-start-line="53" selection-start-column="61" selection-end-line="53" selection-end-column="61" />
-              <folding>
-                <element signature="e#42#53#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Config/TagTypes.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="14" selection-start-line="12" selection-end-line="12" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Block/SymmetryBlockProcessor.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2265">
-              <caret line="157" column="85" selection-start-line="157" selection-start-column="85" selection-end-line="157" selection-end-column="85" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Config/TagConfig.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1200">
-              <caret line="80" column="48" selection-start-line="80" selection-start-column="48" selection-end-line="80" selection-end-column="48" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -130,151 +28,19 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>!</find>
-      <find>brackets_style_regx</find>
-      <find>after_text_raw</find>
-      <find>tag_</find>
-      <find>sub_tag</find>
-      <find>tag</find>
-      <find>False</find>
-      <find>KEY_EXTENSION</find>
-      <find>symmetry_block_processor</find>
-      <find>tag_name</find>
-      <find>KEY_TYPE</find>
-      <find>li</find>
-      <find>__lists_to_dicts</find>
-      <find>sub_tag_type</find>
-      <find>sub_tag_name</find>
-      <find>TAG_NAME_BLOCK</find>
-      <find>KEY_TEXT</find>
-      <find>input_text</find>
-      <find>TYPE_TABLE_TR</find>
-      <find>symm</find>
-      <find>BREAK</find>
-      <find>CODE</find>
-      <find>TR</find>
-      <find>TAG_NAME</find>
-      <find>TYPE_PARAGRAPH</find>
-      <find>update_md_dict</find>
-      <find>menu_dict</find>
-      <find>make_citation_html</find>
-      <find>Me</find>
-      <find>HTML</find>
-    </findStrings>
-    <replaceStrings>
-      <replace />
-    </replaceStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/emd/__main__.py" />
-        <option value="$PROJECT_DIR$/emd/System/Parameter.py" />
-        <option value="$PROJECT_DIR$/emd/System/Mode.py" />
-        <option value="$PROJECT_DIR$/emd/File/File.py" />
-        <option value="$PROJECT_DIR$/emd/File/Paths.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/BlockQuotesProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/SymmetryProcessorConfig.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Inline/HeaderProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Inline/ImageProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Inline/LinkProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Inline/VideoProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Inline/AudioProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/UnionProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/TagConfig.py" />
-        <option value="$PROJECT_DIR$/emd/System/HTML_Entities.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Block/TableBlockProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/BasicProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Block/BlockQuotesProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Inline/CitationProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Inline/Media/ImageProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Inline/Media/AudioProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Inline/Media/LinkProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Inline/Media/VideoProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Inline/Media/MediaProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Block/ListProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/System/UUID.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Block/BreakLineProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/UnionController.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/ExtractController.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/ConvertorController.py" />
-        <option value="$PROJECT_DIR$/emd/markdown.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Block/SymmetryBlockProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Block/HorizontalRuleProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Config/TagConfig.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Block/ParagraphProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Config/TagTypes.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Block/HeaderProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Inline/SymmetryInlineProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/Block/TableProcessor.py" />
-        <option value="$PROJECT_DIR$/emd/Processor/ConverterController.py" />
-        <option value="$PROJECT_DIR$/emarkdown/Processor/Block/HeaderProcessor.py" />
-        <option value="$PROJECT_DIR$/emarkdown/System/HTML_Entities.py" />
-        <option value="$PROJECT_DIR$/emarkdown/File/File.py" />
-        <option value="$PROJECT_DIR$/emarkdown/Processor/Inline/CitationProcessor.py" />
-        <option value="$PROJECT_DIR$/emarkdown/markdown.py" />
-        <option value="$PROJECT_DIR$/emarkdown/www/dark/Dark_HTML.py" />
-        <option value="$PROJECT_DIR$/emarkdown/Processor/ConverterController.py" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="232" />
-    <option name="y" value="242" />
-    <option name="width" value="1680" />
-    <option name="height" value="963" />
-  </component>
+  <component name="ProjectId" id="1U4rCFEtfzgS7X64Zu0eJNxvkvm" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="emarkdown" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emarkdown" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="emarkdown" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emarkdown" type="462c0819:PsiDirectoryNode" />
-              <item name="emarkdown" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="emarkdown" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emarkdown" type="462c0819:PsiDirectoryNode" />
-              <item name="emarkdown" type="462c0819:PsiDirectoryNode" />
-              <item name="Processor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="emarkdown" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emarkdown" type="462c0819:PsiDirectoryNode" />
-              <item name="emarkdown" type="462c0819:PsiDirectoryNode" />
-              <item name="www" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="emarkdown" type="b2602c69:ProjectViewProjectNode" />
-              <item name="emarkdown" type="462c0819:PsiDirectoryNode" />
-              <item name="emarkdown" type="462c0819:PsiDirectoryNode" />
-              <item name="www" type="462c0819:PsiDirectoryNode" />
-              <item name="dark" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
-  </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -421,41 +187,23 @@
       <workItem from="1574383226618" duration="64605000" />
       <workItem from="1574542582602" duration="296000" />
       <workItem from="1574554537431" duration="8898000" />
+      <workItem from="1574626580502" duration="4387000" />
     </task>
     <servers />
   </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="202738000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="92" y="23" width="1680" height="963" extended-state="0" />
-    <editor active="true" />
-    <layout>
-      <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.20634921" />
-      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Database Changes" order="0" />
-      <window_info anchor="bottom" id="Terminal" order="1" />
-      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="3" />
-      <window_info anchor="bottom" id="Python Console" order="4" />
-      <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Find" order="7" weight="0.3255102" />
-      <window_info anchor="bottom" id="Run" order="8" weight="0.29161882" />
-      <window_info anchor="bottom" id="Debug" order="9" weight="0.3903559" />
-      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="12" />
-      <window_info anchor="right" id="Database" order="0" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="SciView" order="2" />
-      <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
-    </layout>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -468,316 +216,7 @@
       </breakpoints>
     </breakpoint-manager>
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/emarkdown/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Exceptions/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Exceptions/FileException.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Exceptions/FrontEndException.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/File/Paths.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emd/www/css/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/emd/www/javascript/__init__.py" />
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="1740" selection-start-line="1740" selection-end-line="1740" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/Cellar/python/3.6.5_1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="554">
-          <caret line="331" selection-start-line="331" selection-end-line="331" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Config/lib_config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="61" selection-start-column="61" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/Cellar/python/3.6.5_1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/sre_parse.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="403" selection-start-line="403" selection-end-line="403" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/System/Mode.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-10">
-          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
-          <folding>
-            <element signature="e#114#128#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/System/Parameter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="25" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/BasicProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="10" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Inline/Media/LinkProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
-          <folding>
-            <element signature="e#24#92#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Inline/Media/VideoProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-16">
-          <caret line="6" column="34" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="34" />
-          <folding>
-            <element signature="e#24#65#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Inline/Media/AudioProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1">
-          <caret line="6" column="34" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="34" />
-          <folding>
-            <element signature="e#24#65#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Inline/Media/ImageProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="65">
-          <caret line="6" column="34" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="34" />
-          <folding>
-            <element signature="e#24#65#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/System/UUID.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Block/BlockQuotesProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="31" lean-forward="true" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Block/BreakLineProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Block/HorizontalRuleProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="19" column="60" lean-forward="true" selection-start-line="19" selection-start-column="60" selection-end-line="19" selection-end-column="60" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Block/ParagraphProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="27" column="57" selection-start-line="27" selection-start-column="57" selection-end-line="27" selection-end-column="57" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Inline/Media/MediaProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-771">
-          <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Block/ListProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="252" column="20" selection-start-line="252" selection-start-column="10" selection-end-line="252" selection-end-column="20" />
-          <folding>
-            <element signature="e#24#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Inline/SymmetryInlineProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="102" column="85" selection-start-line="102" selection-start-column="85" selection-end-line="102" selection-end-column="85" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Block/HeaderProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="72" column="74" selection-start-line="72" selection-start-column="74" selection-end-line="72" selection-end-column="74" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/__main__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/File/File.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1845">
-          <caret line="130" column="19" selection-start-line="130" selection-start-column="19" selection-end-line="130" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Block/TableProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="53" column="61" selection-start-line="53" selection-start-column="61" selection-end-line="53" selection-end-column="61" />
-          <folding>
-            <element signature="e#42#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Config/TagTypes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="14" selection-start-line="12" selection-end-line="12" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Block/SymmetryBlockProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2265">
-          <caret line="157" column="85" selection-start-line="157" selection-start-column="85" selection-end-line="157" selection-end-column="85" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Config/TagConfig.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1200">
-          <caret line="80" column="48" selection-start-line="80" selection-start-column="48" selection-end-line="80" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/test.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/System/HTML_Entities.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/ExtractController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-296">
-          <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/markdown.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="25" column="50" selection-start-line="25" selection-start-column="50" selection-end-line="25" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/www/dark/Dark_HTML.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="915">
-          <caret line="61" column="26" selection-start-line="61" selection-start-column="26" selection-end-line="61" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/Inline/CitationProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="23" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="23" />
-          <folding>
-            <element signature="e#24#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emarkdown/Processor/ConverterController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2400">
-          <caret line="183" column="22" selection-start-line="183" selection-start-column="18" selection-end-line="183" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#702#1778#0" />
-            <element signature="e#1869#2106#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/emarkdown$__main__.coverage" NAME="__main__ Coverage Results" MODIFIED="1574630965242" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/emarkdown" />
   </component>
 </project>

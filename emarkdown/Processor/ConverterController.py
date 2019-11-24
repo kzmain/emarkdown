@@ -3,6 +3,7 @@ import pathlib
 import re
 
 from emarkdown.Processor.Config import TagConfig as Config, TagTypes
+from emarkdown.Processor.Inline.CitationProcessor import CitationProcessor
 from emarkdown.Processor.Inline.Media.MediaProcessor import MediaProcessor
 from emarkdown.System import HTML_Entities
 
@@ -13,12 +14,12 @@ class ConverterController:
     def __init__(self):
         pass
 
-    def process(self, md_dict, unmd_dict):
+    def process(self, md_dict, unmd_dict, citations_dict):
         # basic_space_unit = 2
         main_text = md_dict[0][0][Config.KEY_TEXT]
         md_dict[0].pop(0)
         md_dict.pop(0)
-        md_dict = self.update_md_dict(md_dict)
+        md_dict, menu_dict = self.update_md_dict(md_dict)
         unmd_dict = self.update_unmd_dict(unmd_dict)
 
         tp_dict = copy.deepcopy(md_dict)
@@ -51,9 +52,14 @@ class ConverterController:
                     main_text = main_text.replace(l_uuid, tag_text)
                     tp_dict.pop(l_uuid)
 
-        return main_text
+        menu = self.make_menu_html(menu_dict)
+        citation = self.make_citation_html(citations_dict)
+        return main_text, menu, citation
 
     def update_md_dict(self, input_dict):
+        menu_dict = {}
+        h1_name = ""
+        h2_name = ""
         for level, level_dict in input_dict.items():
             for t_uuid, tag_dict in level_dict.items():
                 # Block
@@ -75,6 +81,7 @@ class ConverterController:
                     if tag_type == TagTypes.TYPE_SYMMETRY_BLOCK:
                         tag_l = tag_dict[Config.KEY_SUB_TYPE] % tag_dict[Config.KEY_EXTENSION].lower() + "\n"
                         tag_r = "\n" + tag_l.split(" ")[0] + ">"
+                        tag_r = tag_r.replace("<", "</")
                     # If header
                     elif header_match:
                         tag_l = tag_type % tag_text.lower().replace(" ", "-")
@@ -83,8 +90,17 @@ class ConverterController:
                     if tag_type == TagTypes.TYPE_PARAGRAPH:
                         tag_text = tag_text.replace("\n", "<br />\n")
                         tag_text = re.sub("^", " " * self.basic_space_unit, tag_text, flags=re.MULTILINE)
-                    input_dict[level][t_uuid][Config.KEY_TEXT] = tag_l + tag_text + tag_r
-
+                    tag_text = tag_l + tag_text + tag_r
+                    input_dict[level][t_uuid][Config.KEY_TEXT] = tag_text
+                    if re.match(r"^<h1", tag_text):
+                        h1_name = tag_text
+                        if h1_name not in menu_dict.keys():
+                            menu_dict[h1_name] = {}
+                    elif re.match(r"^<h2", tag_text):
+                        h2_name = tag_text
+                        if h1_name not in menu_dict.keys():
+                            menu_dict[h1_name] = {}
+                        menu_dict[h1_name][h2_name] = {}
                 # Inline
                 else:
                     tag_text = input_dict[level][t_uuid][Config.KEY_TEXT]
@@ -125,7 +141,7 @@ class ConverterController:
                         for element in tag_list:
                             tag_r += "</" + element
                     input_dict[level][t_uuid][Config.KEY_TEXT] = tag_l + tag_text + tag_r
-        return input_dict
+        return input_dict, menu_dict
 
     @staticmethod
     def update_unmd_dict(input_dict):
@@ -163,3 +179,50 @@ class ConverterController:
                         tag_r += "</" + element
                 input_dict[t_uuid] = tag_l + tag_text + tag_r
         return input_dict
+
+    @staticmethod
+    def make_menu_html(menu_dict):
+        menu = "<ul>"
+        for h1, h2s in menu_dict.items():
+            id_match = re.search(r"(?<=id = \")((?!\")(.))*", h1)
+            h1_id = h1[id_match.start(): id_match.end()]
+            txt_match = re.search(r"(?<=\>)((?!<\/)(.))*", h1)
+            h1_txt = h1[txt_match.start(): txt_match.end()]
+            h1_href = "<a href=\"#%s\" title=\"\">%s</a>" % (h1_id, h1_txt)
+            if len(h2s) == 0:
+
+                menu = menu + "\n<li>" + h1_href + "</li>"
+            else:
+                menu = menu + "\n<li>\n<span class=\"opener active\">" + h1_href + "</span>\n<ul>"
+                for h2, _ in h2s.items():
+                    id_match = re.search(r"(?<=id = \")((?!\")(.))*", h2)
+                    h2_id = h2[id_match.start(): id_match.end()]
+                    txt_match = re.search(r"(?<=\>)((?!<\/)(.))*", h2)
+                    h2_txt = h2[txt_match.start(): txt_match.end()]
+                    h2_href = "<a href=\"#%s\" title=\"\">%s</a>" % (h2_id, h2_txt)
+                    menu = menu + "\n<li>" + h2_href + "</li>"
+                menu = menu + "\n</ul>" + "\n</li>"
+        menu = menu + "\n</ul>"
+        return menu
+
+    @staticmethod
+    def make_citation_html(citations_dict):
+        if len(citations_dict) == 0:
+            return ""
+        citations = "<ol>"
+        for _, c_dict in citations_dict.items():
+            if CitationProcessor.VALUE_TYPE_WEB != c_dict[CitationProcessor.KEY_TYPE]:
+                citations += "\n<li>%s. (%s). <i>%s</i>. %s, pp.%s. [Access Date: %s].</li>" % \
+                         (c_dict[CitationProcessor.KEY_AUTHOR], c_dict[CitationProcessor.KEY_DATE_PUBLISH],
+                          c_dict[CitationProcessor.KEY_TITLE], c_dict[CitationProcessor.KEY_EDITION],
+                          c_dict[CitationProcessor.KEY_PAGE], c_dict[CitationProcessor.KEY_DATE_ACCESS])
+            else:
+                if CitationProcessor.KEY_URL not in c_dict:
+                    c_dict[CitationProcessor.KEY_URL] = ""
+                citations += "<li>\n%s. (%s). <i>%s</i>[online]. %s, pp.%s. Available at: %s [Accessed %s].</li>" % \
+                             (c_dict[CitationProcessor.KEY_AUTHOR], c_dict[CitationProcessor.KEY_DATE_PUBLISH],
+                              c_dict[CitationProcessor.KEY_TITLE], c_dict[CitationProcessor.KEY_EDITION],
+                              c_dict[CitationProcessor.KEY_PAGE], c_dict[CitationProcessor.KEY_URL],
+                              c_dict[CitationProcessor.KEY_DATE_ACCESS])
+        citations += "</ol>"
+        return citations

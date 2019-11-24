@@ -7,6 +7,7 @@ from emarkdown.File import File, Paths
 from emarkdown.Processor.ConverterController import ConverterController
 from emarkdown.Processor.ExtractController import ExtractController
 from emarkdown.System import Mode
+from emarkdown.www.dark import Dark_HTML
 
 
 def process(argv_list):
@@ -17,10 +18,12 @@ def process(argv_list):
         extractor = ExtractController()
         md_dict, unmd_dict, citations_dict = extractor.process(res_uri)
         converter = ConverterController()
-        html_text = converter.process(md_dict, unmd_dict)
+        html_text, menu_text, citations_text = converter.process(md_dict, unmd_dict, citations_dict)
         if dest_uri is not None:
             export = open(dest_uri, "w+")
-            export.write(html_text)
+            export.write(Dark_HTML.FirstContent + html_text +
+                         Dark_HTML.SecondContent + menu_text +
+                         Dark_HTML.ThirdContent + citations_text + Dark_HTML.FourthContent)
             export.close()
         return html_text
 

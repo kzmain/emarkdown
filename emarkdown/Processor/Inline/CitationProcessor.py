@@ -11,6 +11,8 @@ class CitationProcessor(BasicProcessor):
     nor_regx = r"^(\n)?(\!)(\(((?!\(|\)).)*\)){7}$"
     web_regx = r"^(\n)?(\!)(\(((?!\(|\)).)*\)){8}$"
 
+    VALUE_TYPE_WEB = "web"
+
     KEY_TYPE = "type"
     KEY_AUTHOR = "author"
     KEY_TITLE = "title"
@@ -59,6 +61,7 @@ class CitationProcessor(BasicProcessor):
 
             if web_match:
                 insert_dict[self.KEY_URL] = citation_list[7]
+                insert_dict[self.KEY_TYPE] = self.VALUE_TYPE_WEB
 
             citations_dict[citations_num] = insert_dict
             citations_num += 1

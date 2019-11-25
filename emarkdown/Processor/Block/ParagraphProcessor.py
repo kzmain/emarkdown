@@ -9,45 +9,34 @@ from emarkdown.Processor.Config import TagConfig as con, TagTypes
 # 只处理 start/block quote/symmetry block/li
 class ParagraphProcessor(BasicProcessor):
     tag_name = TagTypes.TYPE_PARAGRAPH
-    paragraph_regx = UUID.get_regx_paragraph()
+    p_regx = UUID.get_regx_paragraph()
 
     def process_tag(self, md_dicts):
-        tp_dicts = copy.deepcopy(md_dicts)
+        tp_dict = copy.deepcopy(md_dicts)
         for level, level_dict in md_dicts.items():
-            for l_uuid, l_tag_dict in level_dict.items():
-                in_text = l_tag_dict[con.KEY_TEXT]
-                p_match = re.search(self.paragraph_regx, in_text, re.MULTILINE)
+            for uuid, tag_dict in level_dict.items():
 
-                tag_type = l_tag_dict[con.KEY_TYPE]
-                if tag_type == TagTypes.TYPE_LIST_LI \
-                        or tag_type == TagTypes.TYPE_BLOCK_QUOTE \
-                        or tag_type == TagTypes.TYPE_START \
-                        or tag_type == TagTypes.TYPE_SYMMETRY_BLOCK:
-                    while p_match:
-                        p_text = in_text[p_match.start(): p_match.end()]
-                        before_text = in_text[: p_match.start()]
-                        after_text = in_text[p_match.end():]
-                        p_text = re.sub("^\n", "", p_text, 1)
-                        # @TODO 检查 < > 但是也要看是否pure html
-                        if True:
-                            p_text = p_text.replace("<", HTML_Entities.ENTITY_DICT["<"])
-                            p_text = p_text.replace(">", HTML_Entities.ENTITY_DICT[">"])
-                        # Replace
-                        new_insert_dict = copy.deepcopy(con.insert_dict)
-                        new_uuid = UUID.get_new_uuid()
-                        new_insert_dict[con.KEY_UUID] = new_uuid
-                        new_insert_dict[con.KEY_EXTENSION] = ""
-                        new_insert_dict[con.KEY_INLINE_FLAG] = False
-                        new_insert_dict[con.KEY_TEXT] = p_text
-                        new_insert_dict[con.KEY_TYPE] = self.tag_name
+                tag_type = tag_dict[con.KEY_TYPE]
+                if tag_type == TagTypes.TYPE_LIST_LI or tag_type == TagTypes.TYPE_BLOCK_QUOTE \
+                        or tag_type == TagTypes.TYPE_START or tag_type == TagTypes.TYPE_SYMMETRY_BLOCK:
+                    pass
+                else:
+                    continue
 
-                        store_level = level + 1
-                        if store_level not in tp_dicts:
-                            tp_dicts[store_level] = {}
-                        tp_dicts[store_level][new_uuid] = new_insert_dict
+                in_text = tag_dict[con.KEY_TEXT]
+                match, b_txt, m_txt, a_txt = self.re_search_get_txt(in_text, None, self.p_regx, re.MULTILINE)
+                while match:
+                    m_txt = re.sub("^\n", "", m_txt, 1)
+                    # @TODO 检查 < > 但是也要看是否pure html
+                    if True:
+                        m_txt = m_txt.replace("<", HTML_Entities.ENTITY_DICT["<"])
+                        m_txt = m_txt.replace(">", HTML_Entities.ENTITY_DICT[">"])
 
-                        in_text = before_text + new_uuid + after_text
-                        tp_dicts[level][l_uuid][con.KEY_TEXT] = in_text
+                    new_dict, new_uuid = self.get_new_dict(m_txt, self.tag_name, "", False, "")
+                    tp_dict = self.insert_tag_md_dict(tp_dict, level, new_uuid, new_dict)
 
-                        p_match = re.search(self.paragraph_regx, in_text, re.MULTILINE)
-        return tp_dicts
+                    in_text = b_txt + new_uuid + a_txt
+                    tp_dict[level][uuid][con.KEY_TEXT] = in_text
+
+                    match, b_txt, m_txt, a_txt = self.re_search_get_txt(in_text, None, self.p_regx, re.MULTILINE)
+        return tp_dict

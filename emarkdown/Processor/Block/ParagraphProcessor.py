@@ -28,7 +28,7 @@ class ParagraphProcessor(BasicProcessor):
                         before_text = in_text[: p_match.start()]
                         after_text = in_text[p_match.end():]
                         p_text = re.sub("^\n", "", p_text, 1)
-                        ## ！！！！！！！！！！！！If accept pure html
+                        # @TODO 检查 < > 但是也要看是否pure html
                         if True:
                             p_text = p_text.replace("<", HTML_Entities.ENTITY_DICT["<"])
                             p_text = p_text.replace(">", HTML_Entities.ENTITY_DICT[">"])

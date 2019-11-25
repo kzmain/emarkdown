@@ -1,6 +1,4 @@
 import json
-import re
-import os
 import logging
 
 from emarkdown.File import File, PathsConfig

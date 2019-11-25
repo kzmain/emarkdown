@@ -1,9 +1,8 @@
-import copy
-
-from emarkdown.Processor.Block.BreakLineProcessor import BreakLineProcessor
-from emarkdown.Processor.Block.HorizontalRuleProcessor import HorizontalRuleProcessor
+from emarkdown.Processor.BasicProcessor import BasicProcessor
+from emarkdown.Processor.Block.InlineBlock.BreakLineProcessor import BreakLineProcessor
+from emarkdown.Processor.Block.InlineBlock.HorizontalRuleProcessor import HorizontalRuleProcessor
 from emarkdown.Processor.Block.ParagraphProcessor import ParagraphProcessor
-from emarkdown.Processor.Config import TagConfig as Config, TagTypes
+from emarkdown.Processor.Config import TagTypes
 from emarkdown.Processor.Block.BlockQuotesProcessor import BlockQuotesProcessor
 from emarkdown.Processor.Block.ListProcessor import ListProcessor
 from emarkdown.Processor.Block.SymmetryBlockProcessor import SymmetryBlockProcessor
@@ -50,16 +49,9 @@ class ExtractController:
         unmd_dict = {}
         # 准备初始文件的位置
         # md_dict[0][0] 文章基本位置
-        new_dict = copy.deepcopy(Config.insert_dict)
-        new_dict[Config.KEY_TEXT] = md_text
-        new_dict[Config.KEY_TYPE] = TagTypes.TYPE_START
-        new_dict[Config.KEY_INLINE_FLAG] = False
-        new_dict[Config.KEY_UUID] = 0
-        new_dict[Config.KEY_EXTENSION] = ""
-        del md_text
         md_dict[0] = {}
-        md_dict[0][0] = new_dict
-        del new_dict
+        md_dict[0][0] = BasicProcessor.get_new_dict(md_text, TagTypes.TYPE_START, is_inline=False, new_uuid=0)
+        del md_text
         # 开始处理不可变区块
         md_dict, unmd_dict = self.processor_dict["symmetry_block_processor"].process_immutable_tag(md_dict, unmd_dict)
         # 开始处理左侧区块
@@ -70,7 +62,6 @@ class ExtractController:
         md_dict = self.processor_dict["list_processor"].process_tag(md_dict)
         # 开始处理表格区块（无需容忍列表）
         md_dict = self.processor_dict["table_block_processor"].process_tag(md_dict)
-
         # 开始处理inline的区块们
         md_dict, unmd_dict = self.processor_dict["symmetry_inline_processor"].process_immutable_tag(md_dict, unmd_dict)
         md_dict = self.processor_dict["header_processor"].process_tag(md_dict)

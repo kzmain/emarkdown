@@ -24,7 +24,7 @@ class ListProcessor(BasicProcessor):
     # This only match a element of a list
     ordered_regx = r"(\n)?(\d\.)( )+.*(\n(?!(\d\.)|\*).*)*"
     unordered_regx = r"(\n)?(\*|\-|\+)( )+.*(\n(?!(\d\.)|\*|\-|\+).*)*"
-    # Match space before list symbol to repalce
+    # Match space before list symbol to replace
     space_regx = r"^( ){%d,%d}(?=\*|\+|\-|\d\.)"
     ls_num = 2
 

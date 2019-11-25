@@ -3,9 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="6ed2ac6e-f157-454f-8a04-81fdf4d01d47" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emarkdown/File/File.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/File/File.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emarkdown/Processor/BasicProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/Processor/BasicProcessor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emarkdown/Processor/Block/BlockQuotesProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/Processor/Block/BlockQuotesProcessor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emarkdown/Processor/Block/InlineBlock/BreakLineProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/Processor/Block/InlineBlock/BreakLineProcessor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emarkdown/Processor/Block/InlineBlock/HorizontalRuleProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/Processor/Block/InlineBlock/HorizontalRuleProcessor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emarkdown/Processor/Block/InlineBlock/InlineBlockProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/Processor/Block/InlineBlock/InlineBlockProcessor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emarkdown/Processor/Block/ListProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/Processor/Block/ListProcessor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emarkdown/Processor/ConverterController.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/Processor/ConverterController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emarkdown/Processor/ExtractController.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/Processor/ExtractController.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emarkdown/Processor/Inline/Media/MediaProcessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/Processor/Inline/Media/MediaProcessor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emarkdown/markdown.py" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/markdown.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emarkdown/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/emarkdown/test.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,16 +54,17 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/emarkdown/Processor/Block/InlineBlock" />
+      <recent name="$PROJECT_DIR$/emd/Processor/Block" />
+      <recent name="$PROJECT_DIR$/emd/Processor/Config" />
+      <recent name="$PROJECT_DIR$/emd/Processor/Inline/Media" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/emd/Processor/Inline" />
       <recent name="$PROJECT_DIR$/emd/Processor/Block" />
       <recent name="$PROJECT_DIR$/emd/www" />
       <recent name="$PROJECT_DIR$/emd" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/emd/Processor/Block" />
-      <recent name="$PROJECT_DIR$/emd/Processor/Config" />
-      <recent name="$PROJECT_DIR$/emd/Processor/Inline/Media" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -187,7 +196,8 @@
       <workItem from="1574383226618" duration="64605000" />
       <workItem from="1574542582602" duration="296000" />
       <workItem from="1574554537431" duration="8898000" />
-      <workItem from="1574626580502" duration="4387000" />
+      <workItem from="1574626580502" duration="13619000" />
+      <workItem from="1574640216862" duration="5856000" />
     </task>
     <servers />
   </component>
@@ -199,7 +209,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -210,13 +222,32 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/emarkdown/markdown.py</url>
-          <line>27</line>
+          <line>26</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emarkdown/Processor/Block/HeaderProcessor.py</url>
+          <line>19</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emarkdown/Processor/ConverterController.py</url>
+          <line>22</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emarkdown/Processor/ConverterController.py</url>
+          <line>37</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/emarkdown/Processor/ExtractController.py</url>
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/emarkdown$__main__.coverage" NAME="__main__ Coverage Results" MODIFIED="1574630965242" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/emarkdown" />
+    <SUITE FILE_PATH="coverage/emarkdown$__main__.coverage" NAME="__main__ Coverage Results" MODIFIED="1574645924540" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/emarkdown" />
   </component>
 </project>

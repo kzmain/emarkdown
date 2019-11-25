@@ -53,6 +53,7 @@ class MediaProcessor(BasicProcessor):
             after_text = input_text[reference_match.end():]
 
             match_text = input_text[reference_match.start():reference_match.end()]
+            # @TODO 这个可能会提关掉输入的空格
             match_text = re.sub(r"( )+", " ", match_text)
             match_text = re.sub(r"\n", "", match_text)
             reference_list = match_text.split(" ", 2)

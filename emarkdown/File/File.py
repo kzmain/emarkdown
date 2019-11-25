@@ -55,6 +55,7 @@ def check_folder_write_mode(uri):
         raise False
     return True
 
+
 def check_folder_read_mode(uri):
     if not os.path.isdir(uri):
         return False

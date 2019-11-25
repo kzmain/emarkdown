@@ -1,76 +1,69 @@
 import copy
 import re
 
-from emarkdown.Processor.BasicProcessor import BasicProcessor
+from emarkdown.Processor.BasicProcessor import BasicProcessor as Bp
 from emarkdown.System import UUID
-from emarkdown.Processor.Config import TagConfig as con, TagTypes
+from emarkdown.Processor.Config import TagConfig as Config, TagTypes
 
 
-class BlockQuotesProcessor(BasicProcessor):
+class BlockQuotesProcessor(Bp):
     tag_name = TagTypes.TYPE_BLOCK_QUOTE
     # Match '>' with '- ' , '* ', '+', '1. ' before
-    block_quote_regx_raw = r"((((\*)|(\-)|(\d\.)))*( )*(>)( )+.*)(\n(?!((\*)|(\-)|(\d\.)))(.)+)*"
+    raw_regx = r"((((\*)|(\-)|(\d\.)))*( )*(>)( )+.*)(\n(?!((\*)|(\-)|(\d\.)))(.)+)*"
     # Match '>' only
     # block_quote_regx = r"((%s)(( )+((?!\n)(\w|\W))+|( *))(\n)?)+" % ">"
-    block_quote_regx = r"(^( )*)?(>)( )+.*(\n(?!((\*)|(\-)|(\d\.)))(.)+)*"
+    exact_regx = r"(^( )*)?(>)( )+.*(\n(?!((\*)|(\-)|(\d\.)))(.)+)*"
     # Match all '> ' and prepare to replace
     # block_quote_replace_regx = r"((?<!\W|\w)|(?<=\n))(%s( )*)" % ">"
-    block_quote_replace_regx = r"((?<!\W|\w)|(?<=\n))( )*(>( )*)"
+    replace_regx = r"((?<!\W|\w)|(?<=\n))( )*(>( )*)"
 
-    def process_tag(self, md_dicts, unmd_dicts):
-        # Step 1 Match first block quote
-        tp_dict = copy.deepcopy(md_dicts)
-        # Step 2 Process matched block quote
+    # Recursive loop
+    # Step 1 Match first block quote
+    # Step 2 Process matched block quote
+    def process_tag(self, md_dict, unmd_dicts):
+        tp_dict = copy.deepcopy(md_dict)
         checking_flag = True
         while checking_flag:
             checking_flag = False
-            md_dicts = copy.deepcopy(tp_dict)
-            for level, level_dict in md_dicts.items():
-                for uuid, text_dict in level_dict.items():
-                    input_text = text_dict[con.KEY_TEXT]
-                    raw_match = re.search(self.block_quote_regx_raw, input_text)
-                    while raw_match:
+            md_dict = copy.deepcopy(tp_dict)
+            for level, level_dict in md_dict.items():
+                for uuid, tag_dict in level_dict.items():
+                    # Raw match
+                    in_txt = tag_dict[Config.KEY_TEXT]
+                    match, b_raw, m_raw, a_raw = Bp.re_search_get_txt(in_txt, regx=self.raw_regx)
+                    while match:
                         checking_flag = True
-                        before_text_raw = input_text[:raw_match.start()]
-                        after_text_raw = input_text[raw_match.end():]
+                        # Exact match
+                        exact_match, b_txt, m_txt, a_txt = Bp.re_search_get_txt(m_raw, regx=self.exact_regx)
+                        # Replace >
+                        m_txt = re.sub(self.replace_regx, "", m_txt)
+                        # Check
+                        # ```
+                        # > Example
+                        # ```
+                        unmd_dicts = BlockQuotesProcessor.__check_in_unmd_dict(m_txt, unmd_dicts)
 
-                        match_text_raw = input_text[raw_match.start():raw_match.end()]
-                        # 2.3 Prepare to add <blockquote>
-                        real_match = re.search(self.block_quote_regx, match_text_raw)
-                        before_text = match_text_raw[:real_match.start()]
-                        after_text = match_text_raw[real_match.end():]
+                        new_dict, new_uuid = Bp.get_new_dict(m_txt, self.tag_name, is_inline=False)
+                        tp_dict = Bp.insert_tag_md_dict(tp_dict, level, new_uuid, new_dict)
 
-                        match_text = match_text_raw[real_match.start():real_match.end()]
-                        # 2.4 Replace >
-                        match_text = re.sub(self.block_quote_replace_regx, "", match_text)
+                        in_txt = b_raw + b_txt + new_uuid + a_raw
+                        tp_dict[level][uuid][Config.KEY_TEXT] = in_txt
+                        md_dict[level][uuid][Config.KEY_TEXT] = in_txt
 
-                        check_text = copy.deepcopy(match_text)
-                        match_uuid = re.search(UUID.get_regx_uuid(), check_text)
-                        while match_uuid:
-                            check_uuid = check_text[match_uuid.start():match_uuid.end()]
-                            if check_uuid in unmd_dicts.keys():
-                                if not unmd_dicts[check_uuid][con.KEY_INLINE_FLAG]:
-                                    update_text = unmd_dicts[check_uuid][con.KEY_TEXT]
-                                    update_text = re.sub(self.block_quote_replace_regx, "", update_text)
-                                    unmd_dicts[check_uuid][con.KEY_TEXT] = update_text
-                            check_text = check_text.replace(check_uuid, "")
-                            match_uuid = re.search(UUID.get_regx_uuid(), check_text)
+                        match, b_raw, m_raw, a_raw = Bp.re_search_get_txt(in_txt, regx=self.raw_regx)
+        return md_dict, unmd_dicts
 
-                        new_insert_dict = copy.deepcopy(con.insert_dict)
-                        new_uuid = UUID.get_new_uuid()
-                        new_insert_dict[con.KEY_UUID] = new_uuid
-                        new_insert_dict[con.KEY_EXTENSION] = ""
-                        new_insert_dict[con.KEY_INLINE_FLAG] = False
-                        new_insert_dict[con.KEY_TEXT] = match_text
-                        new_insert_dict[con.KEY_TYPE] = self.tag_name
-
-                        store_level = level + 1
-                        if store_level not in tp_dict:
-                            tp_dict[store_level] = {}
-                        tp_dict[store_level][new_uuid] = new_insert_dict
-
-                        input_text = before_text_raw + before_text + new_uuid + after_text_raw
-                        tp_dict[level][uuid][con.KEY_TEXT] = input_text
-                        md_dicts[level][uuid][con.KEY_TEXT] = input_text
-                        raw_match = re.search(self.block_quote_regx_raw, input_text)
-        return md_dicts, unmd_dicts
+    @staticmethod
+    def __check_in_unmd_dict(tag_text, unmd_dict):
+        check_text = copy.deepcopy(tag_text)
+        match_uuid = re.search(UUID.get_regx_uuid(), check_text)
+        while match_uuid:
+            check_uuid = check_text[match_uuid.start():match_uuid.end()]
+            if check_uuid in unmd_dict.keys():
+                if not unmd_dict[check_uuid][Config.KEY_INLINE_FLAG]:
+                    update_text = unmd_dict[check_uuid][Config.KEY_TEXT]
+                    update_text = re.sub(BlockQuotesProcessor.replace_regx, "", update_text)
+                    unmd_dict[check_uuid][Config.KEY_TEXT] = update_text
+            check_text = check_text.replace(check_uuid, "")
+            match_uuid = re.search(UUID.get_regx_uuid(), check_text)
+        return unmd_dict

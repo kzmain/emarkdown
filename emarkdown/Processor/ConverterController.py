@@ -9,19 +9,29 @@ from emarkdown.System import HTML_Entities
 
 
 class ConverterController:
-    basic_space_unit = 2
+    BASIC_SPACE_NUM = 2
 
     def __init__(self):
         pass
 
-    def process(self, md_dict, unmd_dict, citations_dict):
+    @staticmethod
+    def process(md_dict, unmd_dict, citations_dict):
         main_text = md_dict[0][0][Config.KEY_TEXT]
         md_dict[0].pop(0)
         md_dict.pop(0)
 
-        md_dict, menu_dict = ConverterController.update_md_dict(md_dict)
-        unmd_dict = ConverterController.update_unmd_dict(unmd_dict)
+        md_dict, menu_dict = ConverterController.__update_md_dict(md_dict)
+        unmd_dict = ConverterController.__update_unmd_dict(unmd_dict)
 
+        main_text = ConverterController.__md_dict_to_main_text(md_dict, main_text)
+        main_text = ConverterController.__unmd_dict_to_main_text(unmd_dict, main_text)
+
+        menu = ConverterController.__make_menu_html(menu_dict)
+        citation = ConverterController.__make_citation_html(citations_dict)
+        return main_text, menu, citation
+
+    @staticmethod
+    def __md_dict_to_main_text(md_dict, main_text):
         tp_dict = copy.deepcopy(md_dict)
         loop_count = -1
         while len(md_dict) > 0:
@@ -35,15 +45,19 @@ class ConverterController:
                     if l_uuid in main_text:
                         if not tag_inline:
                             space_level = loop_count + level - 1
-                            tag_text = re.sub("^", " " * space_level * ConverterController.basic_space_unit, tag_text,
+                            tag_text = re.sub("^", " " * space_level * ConverterController.BASIC_SPACE_NUM, tag_text,
                                               flags=re.MULTILINE)
                         if tag_type == TagTypes.TYPE_TABLE_TD or tag_type == TagTypes.TYPE_TABLE_TH:
-                            tag_text = " " * ConverterController.basic_space_unit + tag_text
+                            space_level = loop_count + level - 1
+                            tag_text = " " * space_level * ConverterController.BASIC_SPACE_NUM + tag_text
                         main_text = main_text.replace(l_uuid, tag_text)
                         tp_dict[level].pop(l_uuid)
                         if len(tp_dict[level]) == 0:
                             tp_dict.pop(level)
+        return main_text
 
+    @staticmethod
+    def __unmd_dict_to_main_text(unmd_dict, main_text):
         tp_dict = copy.deepcopy(unmd_dict)
         while len(unmd_dict) > 0:
             unmd_dict = copy.deepcopy(tp_dict)
@@ -51,13 +65,10 @@ class ConverterController:
                 if l_uuid in main_text:
                     main_text = main_text.replace(l_uuid, tag_text)
                     tp_dict.pop(l_uuid)
-
-        menu = ConverterController.make_menu_html(menu_dict)
-        citation = ConverterController.make_citation_html(citations_dict)
-        return main_text, menu, citation
+        return main_text
 
     @staticmethod
-    def update_md_dict(input_dict):
+    def __update_md_dict(input_dict):
         menu_dict = {}
         h1_name = ""
         for level, level_dict in input_dict.items():
@@ -76,23 +87,23 @@ class ConverterController:
                     tag_type = tag_dict[Config.KEY_TYPE]
                     tag_text = tag_dict[Config.KEY_TEXT].replace("\n", "<br />\n")
                     # Process
-                    tag_l = ConverterController.generate_left_tag(tag_type, False)
-                    tag_r = ConverterController.generate_right_tag(tag_type, False)
+                    tag_l = ConverterController.__generate_left_tag(tag_type, False)
+                    tag_r = ConverterController.__generate_right_tag(tag_type, False)
 
                     header_match = re.match(r"^<h\d", tag_type)
                     # If <div>...</div>'s tag
                     if tag_type == TagTypes.TYPE_SYMMETRY_BLOCK:
                         tag_type = tag_dict[Config.KEY_SUB_TYPE] % tag_dict[Config.KEY_EXTENSION].lower()
-                        tag_l = ConverterController.generate_left_tag(tag_type, False)
-                        tag_r = ConverterController.generate_right_tag(tag_type, False)
+                        tag_l = ConverterController.__generate_left_tag(tag_type, False)
+                        tag_r = ConverterController.__generate_right_tag(tag_type, False)
                     # If <h1>, <h2>, <h3>, <h4>, <h5>, <h6>'s tag
                     elif header_match:
                         tag_type = tag_type % tag_text.lower().replace(" ", "-")
-                        tag_l = ConverterController.generate_left_tag(tag_type, True)
-                        tag_r = ConverterController.generate_right_tag(tag_type, True)
+                        tag_l = ConverterController.__generate_left_tag(tag_type, True)
+                        tag_r = ConverterController.__generate_right_tag(tag_type, True)
                     # If <p> tag
                     if tag_type == TagTypes.TYPE_PARAGRAPH:
-                        tag_text = re.sub("^", " " * ConverterController.basic_space_unit, tag_text, flags=re.MULTILINE)
+                        tag_text = re.sub("^", " " * ConverterController.BASIC_SPACE_NUM, tag_text, flags=re.MULTILINE)
 
                     tag_text = tag_l + tag_text + tag_r
                     input_dict[level][t_uuid][Config.KEY_TEXT] = tag_text
@@ -133,21 +144,21 @@ class ConverterController:
                                                                          (link, m_type, alt, title)
                         continue
                     # Process
-                    tag_l = ConverterController.generate_left_tag(tag_type)
-                    tag_r = ConverterController.generate_right_tag(tag_type)
+                    tag_l = ConverterController.__generate_left_tag(tag_type)
+                    tag_r = ConverterController.__generate_right_tag(tag_type)
                     is_symmetry = True if len([x for x in tag_sub_type.split("<") if x != '']) > 0 else False
                     if is_symmetry > 0:
-                        tag_l = ConverterController.generate_left_tag(tag_sub_type, True)
-                        tag_r = ConverterController.generate_right_tag(tag_sub_type, True)
+                        tag_l = ConverterController.__generate_left_tag(tag_sub_type, True)
+                        tag_r = ConverterController.__generate_right_tag(tag_sub_type, True)
                     elif tag_type == TagTypes.TYPE_LIST_LI:
-                        tag_l = ConverterController.generate_left_tag(tag_type, False)
-                        tag_r = ConverterController.generate_right_tag(tag_type, False)
+                        tag_l = ConverterController.__generate_left_tag(tag_type, False)
+                        tag_r = ConverterController.__generate_right_tag(tag_type, False)
                     tag_text = tag_l + tag_text + tag_r
                     input_dict[level][t_uuid][Config.KEY_TEXT] = tag_text
         return input_dict, menu_dict
 
     @staticmethod
-    def update_unmd_dict(input_dict):
+    def __update_unmd_dict(input_dict):
         for t_uuid, tag_dict in input_dict.items():
             tag_text = input_dict[t_uuid][Config.KEY_TEXT]
             tag_text = tag_text \
@@ -167,17 +178,17 @@ class ConverterController:
                 tag_type = tag_dict[Config.KEY_TYPE]
                 tag_sub_type = tag_dict[Config.KEY_SUB_TYPE]
 
-                tag_l = ConverterController.generate_left_tag(tag_type)
-                tag_r = ConverterController.generate_right_tag(tag_type)
+                tag_l = ConverterController.__generate_left_tag(tag_type)
+                tag_r = ConverterController.__generate_right_tag(tag_type)
                 is_symmetry = True if len([x for x in tag_sub_type.split("<") if x != '']) > 0 else False
                 if is_symmetry > 0:
-                    tag_l = ConverterController.generate_left_tag(tag_sub_type, True)
-                    tag_r = ConverterController.generate_right_tag(tag_sub_type, True)
+                    tag_l = ConverterController.__generate_left_tag(tag_sub_type, True)
+                    tag_r = ConverterController.__generate_right_tag(tag_sub_type, True)
                 input_dict[t_uuid] = tag_l + tag_text + tag_r
         return input_dict
 
     @staticmethod
-    def head_to_href(head):
+    def __head_to_href(head):
         id_match = re.search(r"(?<=id = \")((?!\")(.))*", head)
         h_id = head[id_match.start(): id_match.end()]
         txt_match = re.search(r"(?<=>)((?!</)(.))*", head)
@@ -186,23 +197,23 @@ class ConverterController:
         return h_href
 
     @staticmethod
-    def make_menu_html(menu_dict):
+    def __make_menu_html(menu_dict):
         menu = "<ul>"
         for h1, h2s in menu_dict.items():
-            h1_href = ConverterController.head_to_href(h1)
+            h1_href = ConverterController.__head_to_href(h1)
             if len(h2s) == 0:
                 menu = menu + "\n<li>" + h1_href + "</li>"
             else:
                 menu = menu + "\n<li>\n<span class=\"opener active\">" + h1_href + "</span>\n<ul>"
                 for h2, _ in h2s.items():
-                    h2_href = ConverterController.head_to_href(h2)
+                    h2_href = ConverterController.__head_to_href(h2)
                     menu = menu + "\n<li>" + h2_href + "</li>"
                 menu = menu + "\n</ul>" + "\n</li>"
         menu = menu + "\n</ul>"
         return menu
 
     @staticmethod
-    def make_citation_html(citations_dict):
+    def __make_citation_html(citations_dict):
         if len(citations_dict) == 0:
             return ""
         citations = "<ol>"
@@ -224,7 +235,7 @@ class ConverterController:
         return citations
 
     @staticmethod
-    def generate_right_tag(tag_type, is_inline=True):
+    def __generate_right_tag(tag_type, is_inline=True):
         tag_list = [x.replace("<", "</", 1) for x in tag_type.split(">") if x != '']
 
         if len(tag_list) > 0:
@@ -241,7 +252,7 @@ class ConverterController:
             return tag_r
 
     @staticmethod
-    def generate_left_tag(tag_type, is_inline=True):
+    def __generate_left_tag(tag_type, is_inline=True):
         tag_l = tag_type
         if is_inline:
             return tag_l

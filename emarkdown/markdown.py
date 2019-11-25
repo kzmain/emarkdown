@@ -3,7 +3,7 @@ import re
 import os
 import logging
 
-from emarkdown.File import File, Paths
+from emarkdown.File import File, PathsConfig
 from emarkdown.Processor.ConverterController import ConverterController
 from emarkdown.Processor.ExtractController import ExtractController
 from emarkdown.System import Mode
@@ -17,8 +17,7 @@ def process(argv_list):
         dest_uri = File.get_dest_file_uri(argv_list)
         extractor = ExtractController()
         md_dict, unmd_dict, citations_dict = extractor.process(res_uri)
-        converter = ConverterController()
-        html_text, menu_text, citations_text = converter.process(md_dict, unmd_dict, citations_dict)
+        html_text, menu_text, citations_text = ConverterController.process(md_dict, unmd_dict, citations_dict)
         if dest_uri is not None:
             export = open(dest_uri, "w+")
             export.write(Dark_HTML.FirstContent + html_text +
@@ -30,7 +29,7 @@ def process(argv_list):
     elif mode_dict[Mode.KEY_SYS_MODE] == Mode.MODE_CHANGE_LIB:
         lib_uri = File.get_lib_uri(argv_list)
         lib_dict = {"lib_loc": lib_uri}
-        lib_file = open(Paths.LIB_CONFIG, "w+")
+        lib_file = open(PathsConfig.LIB_CONFIG, "w+")
         lib_file.write(json.dumps(lib_dict))
         lib_file.close()
     else:

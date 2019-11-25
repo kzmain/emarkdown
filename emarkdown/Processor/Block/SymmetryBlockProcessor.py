@@ -2,9 +2,8 @@ import copy
 import re
 
 from emarkdown.Processor.BasicProcessor import BasicProcessor
-from emarkdown.Processor.Config import TagConfig as con, TagTypes
+from emarkdown.Processor.Config import TagConfig as Config, TagTypes
 from emarkdown.Processor.Inline.SymmetryInlineProcessor import SymmetryInlineProcessor
-from emarkdown.System import UUID
 
 
 class SymmetryBlockProcessor(BasicProcessor):
@@ -42,14 +41,14 @@ class SymmetryBlockProcessor(BasicProcessor):
 
     # (```)(?!`)((?!```)(\w | \W))*(\n)((?!```)(\w |\W))*(```)(?!`)
 
-    def process_immutable_tag(self, md_dicts, unmd_dicts):
+    def process_immutable_tag(self, md_dicts, unmd_dict):
         # Unchangeable First
-        for _, tag_dict in con.CONFIG_DICT[con.CONFIG_TYPE_BLOCK_SYMMETRY][con.UNCHANGEABLE_TAG].items():
-            tag_unit = tag_dict[con.BASIC_UNIT]
-            tag = tag_dict[con.TAG_REGX]
+        for _, tag_dict in Config.CONFIG_DICT[Config.CONFIG_TYPE_BLOCK_SYMMETRY][Config.UNCHANGEABLE_TAG].items():
+            tag_unit = tag_dict[Config.BASIC_UNIT]
+            tag = tag_dict[Config.TAG_REGX]
 
             block_regx = self.s_immutable_block_regx_raw % (tag, tag_unit, tag, tag, tag, tag_unit)
-            block_regx_exact = self.s_immutable_block_regx_exact % (tag, tag_unit, tag, tag, tag, tag_unit)
+            exact_regx = self.s_immutable_block_regx_exact % (tag, tag_unit, tag, tag, tag, tag_unit)
             block_regx_info = self.s_immutable_block_regx_info % tag
             block_regx_end = self.s_immutable_block_regx_end % tag
 
@@ -59,122 +58,85 @@ class SymmetryBlockProcessor(BasicProcessor):
                 checking_flag = False
                 for level, level_dict in md_dicts.items():
                     for uuid, text_dict in level_dict.items():
-                        input_text = text_dict[con.KEY_TEXT]
-                        raw_match = re.search(block_regx, input_text)
-
-                        while raw_match:
+                        in_txt = text_dict[Config.KEY_TEXT]
+                        match, b_raw, m_raw, a_raw = self.re_search_get_txt(in_txt, None, block_regx)
+                        while match:
                             checking_flag = True
-                            # Find raw match with special symbol before
-                            before_text_raw = input_text[:raw_match.start()]
-                            after_text_raw = input_text[raw_match.end():]
-
-                            match_raw_text = input_text[raw_match.start():raw_match.end()]
-                            del raw_match
+                            del match
                             # Find exact math code block
-                            real_match = re.search(block_regx_exact, match_raw_text)
-                            before_text = match_raw_text[:real_match.start()]
-                            after_text = match_raw_text[real_match.end():]
+                            e_match, b_txt, m_txt, a_txt = self.re_search_get_txt(m_raw, None, exact_regx)
+                            del m_raw
+                            del e_match
+                            # Find info tag and real txt
+                            info_match = re.search(block_regx_info, m_txt)
 
-                            match_text = match_raw_text[real_match.start():real_match.end()]
-                            del match_raw_text
-                            del real_match
-                            # Find exact math code block
-                            info_match = re.search(block_regx_info, match_text)
-                            info_text = match_text[info_match.start():info_match.end()].replace("\n", "")
-                            div_text = match_text[info_match.end():]
+                            info_text = m_txt[info_match.start():info_match.end()].replace("\n", "")
+
+                            div_text = m_txt[info_match.end():]
                             div_text = re.sub(block_regx_end, "", div_text)
 
-                            # Replace
-                            new_insert_dict = copy.deepcopy(con.insert_dict)
-                            new_uuid = UUID.get_new_uuid()
-                            new_insert_dict[con.KEY_UUID] = new_uuid
-                            new_insert_dict[con.KEY_EXTENSION] = info_text
-                            new_insert_dict[con.KEY_INLINE_FLAG] = False
-                            new_insert_dict[con.KEY_TEXT] = div_text
-                            new_insert_dict[con.KEY_TYPE] = self.tag_name
-                            new_insert_dict[con.KEY_SUB_TYPE] = tag_dict[con.TAG_NAME]
-                            unmd_dicts[new_uuid] = new_insert_dict
+                            new_dict, new_uuid = self.get_new_dict(div_text, self.tag_name, tag_dict[Config.TAG_NAME], False, info_text)
 
-                            del new_insert_dict
-                            input_text = before_text_raw + before_text + new_uuid + after_text + after_text_raw
+                            unmd_dict[new_uuid] = new_dict
+
+                            del new_dict
+                            in_txt = b_raw + b_txt + new_uuid + a_txt + a_raw
                             # Update original dict
-                            md_dicts[level][uuid][con.KEY_TEXT] = input_text
-                            raw_match = re.search(block_regx, input_text)
+                            md_dicts[level][uuid][Config.KEY_TEXT] = in_txt
+                            match, b_raw, m_raw, a_raw = self.re_search_get_txt(in_txt, None, block_regx)
 
         inline_processor = SymmetryInlineProcessor()
-        tags_dict = con.CONFIG_DICT[con.CONFIG_TYPE_BLOCK_SYMMETRY][con.UNCHANGEABLE_TAG]
-        md_dicts, unmd_dicts = inline_processor.process_immutable_tag(md_dicts, unmd_dicts, tags_dict)
-        return md_dicts, unmd_dicts
+        tags_dict = Config.CONFIG_DICT[Config.CONFIG_TYPE_BLOCK_SYMMETRY][Config.UNCHANGEABLE_TAG]
+        md_dicts, unmd_dict = inline_processor.process_immutable_tag(md_dicts, unmd_dict, tags_dict)
+        return md_dicts, unmd_dict
 
-    def process_mutable_tag(self, md_dicts):
+    def process_mutable_tag(self, md_dict):
         # Changeable Second
-        for sub_tag_name, tag_dict in con.CONFIG_DICT[con.CONFIG_TYPE_BLOCK_SYMMETRY][con.CHANGEABLE_TAG].items():
-            tag_unit = tag_dict[con.BASIC_UNIT]
-            tag = tag_dict[con.TAG_REGX]
+        for sub_tag_name, tag_dict in Config.CONFIG_DICT[Config.CONFIG_TYPE_BLOCK_SYMMETRY][Config.CHANGEABLE_TAG].items():
+            tag_unit = tag_dict[Config.BASIC_UNIT]
+            tag = tag_dict[Config.TAG_REGX]
 
             block_regx = self.s_mutable_block_regx_raw % (tag, tag_unit, tag, tag, tag, tag_unit)
-            block_regx_exact = self.s_mutable_block_regx_exact % (tag, tag_unit, tag, tag, tag, tag_unit)
+            exact_regx = self.s_mutable_block_regx_exact % (tag, tag_unit, tag, tag, tag, tag_unit)
             block_regx_info = self.s_mutable_block_regx_info % tag
             block_regx_end = self.s_mutable_block_regx_end % tag
 
             # Step 1 BLOCK condition must be first
             checking_flag = True
-            tp_dicts = copy.deepcopy(md_dicts)
+            tp_dict = copy.deepcopy(md_dict)
             while checking_flag:
                 checking_flag = False
-                md_dicts = copy.deepcopy(tp_dicts)
-                for level, level_dict in md_dicts.items():
+                md_dict = copy.deepcopy(tp_dict)
+                for level, level_dict in md_dict.items():
                     for uuid, text_dict in level_dict.items():
-                        input_text = text_dict[con.KEY_TEXT]
-                        raw_match = re.search(block_regx, input_text)
-
-                        while raw_match:
+                        in_txt = text_dict[Config.KEY_TEXT]
+                        match, b_raw, m_raw, a_raw = self.re_search_get_txt(in_txt, None, block_regx)
+                        while match:
                             checking_flag = True
-                            # Find raw match with special symbol before
-                            before_text_raw = input_text[:raw_match.start()]
-                            after_text_raw = input_text[raw_match.end():]
-
-                            match_raw_text = input_text[raw_match.start():raw_match.end()]
                             # Find exact math code block
-                            real_match = re.search(block_regx_exact, match_raw_text)
-                            before_text = match_raw_text[:real_match.start()]
-                            after_text = match_raw_text[real_match.end():]
+                            e_match, b_txt, m_txt, a_txt = self.re_search_get_txt(m_raw, None, exact_regx)
 
-                            match_text = match_raw_text[real_match.start():real_match.end()]
                             # Find exact math code block
-                            info_match = re.search(block_regx_info, match_text)
-                            info_text = match_text[info_match.start():info_match.end()].replace("\n", "")
-                            div_text = match_text[info_match.end():]
+                            info_match = re.search(block_regx_info, m_txt)
+                            info_text = m_txt[info_match.start():info_match.end()].replace("\n", "")
+                            div_text = m_txt[info_match.end():]
                             div_text = re.sub(block_regx_end, "", div_text)
 
-                            # Replace
-                            new_insert_dict = copy.deepcopy(con.insert_dict)
-                            new_uuid = UUID.get_new_uuid()
-                            new_insert_dict[con.KEY_UUID] = new_uuid
-                            new_insert_dict[con.KEY_EXTENSION] = info_text
-                            new_insert_dict[con.KEY_INLINE_FLAG] = False
-                            new_insert_dict[con.KEY_TEXT] = div_text
-                            new_insert_dict[con.KEY_TYPE] = self.tag_name
-                            new_insert_dict[con.KEY_SUB_TYPE] = tag_dict[con.TAG_NAME]
+                            new_dict, new_uuid = self.get_new_dict(div_text, self.tag_name, tag_dict[Config.TAG_NAME], False, info_text)
+                            tp_dict = self.insert_tag_md_dict(tp_dict, level, new_uuid, new_dict)
 
-                            store_level = level + 1
-                            if store_level not in tp_dicts:
-                                tp_dicts[store_level] = {}
-                            tp_dicts[store_level][new_uuid] = new_insert_dict
-
-                            input_text = before_text_raw + before_text + new_uuid + after_text_raw
-                            tp_dicts[level][uuid]["text"] = input_text
-                            md_dicts[level][uuid]["text"] = input_text
+                            in_txt = b_raw + b_txt + new_uuid + a_txt + a_raw
 
                             # Update original dict
-                            md_dicts[level][uuid][con.KEY_TEXT] = input_text
-                            raw_match = re.search(block_regx, input_text)
+                            tp_dict[level][uuid][Config.KEY_TEXT] = in_txt
+                            md_dict[level][uuid][Config.KEY_TEXT] = in_txt
+                            match, b_raw, m_raw, a_raw = self.re_search_get_txt(in_txt, None, block_regx)
 
             # Step 2 INLINE condition must be second
             inline_processor = SymmetryInlineProcessor()
-            tags_dict = con.CONFIG_DICT[con.CONFIG_TYPE_BLOCK_SYMMETRY][con.CHANGEABLE_TAG]
-            md_dicts = inline_processor.process_mutable_tag(md_dicts, tags_dict)
-        return md_dicts
+            tags_dict = Config.CONFIG_DICT[Config.CONFIG_TYPE_BLOCK_SYMMETRY][Config.CHANGEABLE_TAG]
+            md_dict = inline_processor.process_mutable_tag(md_dict, tags_dict)
+        return md_dict
 
     def process_tag(self, md_dicts, unmd_dicts):
         md_dicts, unmd_dicts = self.process_immutable_tag(md_dicts, unmd_dicts)

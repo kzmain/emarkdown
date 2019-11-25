@@ -55,7 +55,7 @@ class HeaderProcessor(BasicProcessor):
             m_txt = m_txt[type_match.end():]
         elif in_type == 2:
             match_text_list = m_txt.split("\n")
-            heading_type = str(1) if "=" in match_text_list[1] else str(2)
-            exact_type = "<h" + heading_type + " id = \"%s\">"
+            number_sign = str(1) if "=" in match_text_list[1] else str(2)
+            exact_type = "<h" + number_sign + " id = \"%s\">"
             m_txt = match_text_list[0]
         return m_txt, exact_type

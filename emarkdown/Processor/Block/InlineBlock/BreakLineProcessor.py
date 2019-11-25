@@ -1,8 +1,6 @@
-import re
-import copy
 from emarkdown.Processor.BasicProcessor import BasicProcessor as Bp
 from emarkdown.Processor.Block.InlineBlock.InlineBlockProcessor import InlineBlockProcessor as Ip
-from emarkdown.Processor.Config import TagConfig as Config, TagTypes
+from emarkdown.Processor.Config import TagTypes
 
 
 class BreakLineProcessor(Bp, Ip):
@@ -11,5 +9,4 @@ class BreakLineProcessor(Bp, Ip):
     filter_list = []
 
     def filter(self, tag_type):
-        filter_list = self.filter_list
         return True

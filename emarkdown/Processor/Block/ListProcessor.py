@@ -14,8 +14,8 @@ class ListProcessor(BasicProcessor):
     # Match first list line's continue sentences
     # Match next line's line signal or normal line
     # list_block_regx = r"(((?<=\n)|(?<!.))(( )*(\*|\-|\+|\d\.))(( )+(?!\n.)(.)*))(((\n)(.)+)*)"
-    list_block_regx = r"(((?<=\n)|(?<!.))(( )*(\*|\-|\+|\d\.))(( )+(?!\n)(.)*))(((\n)(.)+)|(\n)(\n)( )+.+|(\n)(\n)(( )*(\*|\-|\+|\d\.))(( )+(?!\n)(.)*))*"
-    sub_list_block_regex = r"( ){%d,}(\d.|\*|\-|\+)( )+.*((\n)( ){%d,}.*)*"
+    list_regx = r"(((?<=\n)|(?<!.))(( )*(\*|\-|\+|\d\.))(( )+(?!\n)(.)*))(((\n)(.)+)|(\n)(\n)( )+.+|(\n)(\n)(( )*(\*|\-|\+|\d\.))(( )+(?!\n)(.)*))*"
+    sub_list_regx = r"( ){%d,}(\d.|\*|\-|\+)( )+.*((\n)( ){%d,}.*)*"
 
     is_list_line_regx = r"((?<=\n)|(?<!\W|\w))( )*(?=(\d.|\*|\-|\+)( )+)"
 
@@ -88,7 +88,7 @@ class ListProcessor(BasicProcessor):
             text_dict = copy.deepcopy(temp_dict)
             for level, level_dict in text_dict.items():
                 for key_uuid, text in level_dict.items():
-                    sub_list_block_regx = self.sub_list_block_regex % (
+                    sub_list_block_regx = self.sub_list_regx % (
                         self.ls_num * (level + 1), self.ls_num * (level + 1))
                     match = re.search(sub_list_block_regx, text)
                     while match:
@@ -108,46 +108,28 @@ class ListProcessor(BasicProcessor):
                         if store_level not in temp_dict:
                             temp_dict[store_level] = {}
                         temp_dict[store_level][new_key] = block_text
-                        match = re.search(self.sub_list_block_regex, text)
+                        match = re.search(self.sub_list_regx, text)
         return text_dict
 
-    def __update_for_process_list(self, temp_dict, new_text, element_list, level, pre_type):
-        new_list_text = ""
-        # Store li s first
-        store_level = level + 1
-        if store_level not in temp_dict:
-            temp_dict[store_level] = {}
-
+    def __update_for_process_list(self, tp_dict, new_text, element_list, level, pre_type):
+        li_uuids = ""
+        # # Store li s first
         for li in element_list:
-            new_insert_dict = copy.deepcopy(con.insert_dict)
-            li_uuid = UUID.get_new_uuid()
-            new_insert_dict[con.KEY_UUID] = li_uuid
-            new_insert_dict[con.KEY_EXTENSION] = ""
-            new_insert_dict[con.KEY_INLINE_FLAG] = True
-            new_insert_dict[con.KEY_TEXT] = li
-            new_insert_dict[con.KEY_TYPE] = TagTypes.TYPE_LIST_LI
-
-            temp_dict[store_level][li_uuid] = new_insert_dict
-            new_list_text += "\n" + li_uuid
-        li_list = []
+            new_dict, new_uuid = self.get_new_dict(li, TagTypes.TYPE_LIST_LI, "", True, "")
+            tp_dict = self.insert_tag_md_dict(tp_dict, level, new_uuid, new_dict)
+            li_uuids += "\n" + new_uuid
         # Store ordered/unordered list info
         store_level = level
-        if store_level not in temp_dict:
-            temp_dict[store_level] = {}
+        if store_level not in tp_dict:
+            tp_dict[store_level] = {}
 
-        new_insert_dict = copy.deepcopy(con.insert_dict)
-        li_uuid = UUID.get_new_uuid()
-        new_insert_dict[con.KEY_UUID] = li_uuid
-        new_insert_dict[con.KEY_EXTENSION] = ""
-        new_insert_dict[con.KEY_SUB_TYPE] = pre_type
-        new_insert_dict[con.KEY_INLINE_FLAG] = False
-        new_insert_dict[con.KEY_TEXT] = re.sub(r"^\n", "", new_list_text)
-        new_insert_dict[con.KEY_TYPE] = self.tag_name
-        temp_dict[store_level][li_uuid] = new_insert_dict
+        new_txt = re.sub(r"^\n", "", li_uuids)
+        new_dict, new_uuid = self.get_new_dict(new_txt, self.tag_name, pre_type, False, "")
+        tp_dict[store_level][new_uuid] = new_dict
 
-        new_text += "\n" + li_uuid
+        new_text += "\n" + new_uuid
 
-        return temp_dict, new_text, li_list
+        return tp_dict, new_text, []
 
     def __process_list(self, list_dict):
         temp_dict = {}
@@ -156,7 +138,7 @@ class ListProcessor(BasicProcessor):
                 list_type_pre = ""
                 list_type_cur = ""
                 element_list = []
-                new_text = ""
+                new_uuid = ""
                 while old_text != "":
                     old_text = re.sub("^( )*", "", old_text)
                     or_match = re.search(self.ordered_regx, old_text, re.MULTILINE)
@@ -177,15 +159,15 @@ class ListProcessor(BasicProcessor):
                         list_type_cur = TagTypes.TYPE_LIST_UL
                         old_text = old_text[un_match.end():]
                     if list_type_cur != list_type_pre and list_type_pre != "":
-                        temp_dict, new_text, element_list = \
-                            self.__update_for_process_list(temp_dict, new_text, element_list, level, list_type_pre)
+                        temp_dict, new_uuid, element_list = \
+                            self.__update_for_process_list(temp_dict, new_uuid, element_list, level, list_type_pre)
 
                     element_list.append(match_text)
                     list_type_pre = list_type_cur
-                temp_dict, new_text, element_list = \
-                    self.__update_for_process_list(temp_dict, new_text, element_list, level, list_type_pre)
+                temp_dict, new_uuid, element_list = \
+                    self.__update_for_process_list(temp_dict, new_uuid, element_list, level, list_type_pre)
 
-                list_dict[level][key_uuid] = re.sub(r"^\n", "", new_text)
+                list_dict[level][key_uuid] = re.sub(r"^\n", "", new_uuid)
         for l_level in range(1, len(list_dict.keys())):
             for l_old_uuid, l_new_uuid in list_dict[l_level].items():
                 break_flag = False
@@ -200,71 +182,43 @@ class ListProcessor(BasicProcessor):
                             break
                     if break_flag:
                         break
-        new_text = ""
+        new_uuid = ""
         for _, replace_text in list_dict[0].items():
-            new_text = replace_text
-        return new_text, temp_dict
-        # Test code
-        # while len(temp_dict) != 0:
-        #     tt_dict = copy.deepcopy(temp_dict)
-        #
-        #     for t_level, t_level_dict in temp_dict.items():
-        #         for t_uuid, t_tag_dict in t_level_dict.items():
-        #             text_n = t_tag_dict[con.KEY_TEXT]
-        #             if t_uuid in new_text:
-        #                 new_text = new_text.replace(t_uuid, (t_level - 1) * "  " + text_n)
-        #                 tt_dict[t_level].pop(t_uuid)
-        #             if len(tt_dict[t_level]) == 0:
-        #                 tt_dict.pop(t_level)
-        #     temp_dict = copy.deepcopy(tt_dict)
+            new_uuid = replace_text
+        return new_uuid, temp_dict
 
-    def process_tag(self, md_dicts):
+    def process_tag(self, md_dict):
         # Step 1 Match first block quote
-        update_dict = copy.deepcopy(md_dicts)
+        tp_dict = copy.deepcopy(md_dict)
         # Step 2 Process matched block quote
-        md_dicts = copy.deepcopy(update_dict)
-        for level, level_dict in md_dicts.items():
-            for key_uuid, text_dict in level_dict.items():
-                input_text = text_dict[con.KEY_TEXT]
-                match = re.search(self.list_block_regx, input_text, re.MULTILINE)
+        md_dict = copy.deepcopy(tp_dict)
+        for level, level_dict in md_dict.items():
+            for tag_uuid, tag_dict in level_dict.items():
+                in_txt = tag_dict[con.KEY_TEXT]
+
+                match, b_txt, m_txt, a_txt = self.re_search_get_txt(in_txt, None, self.list_regx, re.MULTILINE)
                 while match:
+
+                    # Reformat spaces of list
+                    m_txt = self.__reformat_list(m_txt)
                     # Split list block and others parts
-                    before_text = input_text[:match.start()]
-                    after_text = input_text[match.end():]
+                    list_dict = self.__split_sub_list(m_txt)
+                    # Process the list
+                    new_uuid, list_dict = self.__process_list(list_dict)
 
-                    match_text = input_text[match.start():match.end()]
-                    match_text = self.__reformat_list(match_text)
+                    for _level, _dict in list_dict.items():
+                        store_level = level + _level + 1
+                        if store_level not in tp_dict.keys():
+                            tp_dict[store_level] = {}
+                        tp_dict[store_level].update(_dict)
+                        del _level, _dict, store_level
+                    del list_dict
+                    in_txt = b_txt + new_uuid + a_txt
+                    tp_dict[level][tag_uuid][con.KEY_TEXT] = in_txt
+                    md_dict[level][tag_uuid][con.KEY_TEXT] = in_txt
 
-                    list_dict = self.__split_sub_list(match_text)
-                    match_text, list_dict = self.__process_list(list_dict)
-
-                    for l_level in range(0, len(list_dict)):
-                        for tag_uuid, tag_dict in list_dict[l_level].items():
-                            store_level = level + l_level + 1
-                            if store_level not in update_dict:
-                                update_dict[store_level] = {}
-                            update_dict[store_level][tag_uuid] = tag_dict
-                    input_text = before_text + match_text + after_text
-                    update_dict[level][key_uuid][con.KEY_TEXT] = input_text
-                    md_dicts[level][key_uuid] = input_text
-                    match = re.search(self.list_block_regx, input_text, re.MULTILINE)
-        return update_dict
-        # # update_dict
-        # input_text = ""
-        # for _, replace_text in update_dict[0].items():
-        #     input_text = replace_text
-        #
-        # while len(update_dict) != 1:
-        #     tt_dict = copy.deepcopy(update_dict)
-        #
-        #     for t_level, t_level_dict in update_dict.items():
-        #         if t_level == 0: continue
-        #         for t_uuid, t_tag_dict in t_level_dict.items():
-        #             text_n = t_tag_dict[con.KEY_TEXT]
-        #             if t_uuid in input_text:
-        #                 input_text = input_text.replace(t_uuid, (t_level - 2) * "  " + text_n)
-        #                 tt_dict[t_level].pop(t_uuid)
-        #             if len(tt_dict[t_level]) == 0:
-        #                 tt_dict.pop(t_level)
-        #     update_dict = copy.deepcopy(tt_dict)
-        # print()
+                    match, b_txt, m_txt, a_txt = self.re_search_get_txt(in_txt, None, self.list_regx, re.MULTILINE)
+                del match, b_txt, m_txt, a_txt, in_txt
+                del tag_uuid, tag_dict
+            del level, level_dict
+        return tp_dict

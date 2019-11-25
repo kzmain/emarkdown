@@ -27,7 +27,7 @@ class ParagraphProcessor(BasicProcessor):
                 match, b_txt, m_txt, a_txt = self.re_search_get_txt(in_text, None, self.p_regx, re.MULTILINE)
                 while match:
                     m_txt = re.sub("^\n", "", m_txt, 1)
-                    # @TODO 检查 < > 但是也要看是否pure html
+                    # @TODO 检查 < > 但是也要看是否pure html,要注释掉
                     if True:
                         m_txt = m_txt.replace("<", HTML_Entities.ENTITY_DICT["<"])
                         m_txt = m_txt.replace(">", HTML_Entities.ENTITY_DICT[">"])

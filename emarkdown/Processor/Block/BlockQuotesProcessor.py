@@ -46,7 +46,7 @@ class BlockQuotesProcessor(Bp):
                         new_dict, new_uuid = Bp.get_new_dict(m_txt, self.tag_name, is_inline=False)
                         tp_dict = Bp.insert_tag_md_dict(tp_dict, level, new_uuid, new_dict)
 
-                        in_txt = b_raw + b_txt + new_uuid + a_raw
+                        in_txt = b_raw + b_txt + new_uuid + a_raw + a_txt
                         tp_dict[level][uuid][Config.KEY_TEXT] = in_txt
                         md_dict[level][uuid][Config.KEY_TEXT] = in_txt
 

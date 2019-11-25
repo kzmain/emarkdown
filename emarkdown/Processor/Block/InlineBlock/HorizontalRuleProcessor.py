@@ -1,8 +1,6 @@
-import copy
-import re
 from emarkdown.Processor.BasicProcessor import BasicProcessor as Bp
 from emarkdown.Processor.Block.InlineBlock.InlineBlockProcessor import InlineBlockProcessor as Ip
-from emarkdown.Processor.Config import TagConfig as Config, TagTypes
+from emarkdown.Processor.Config import TagTypes
 
 
 class HorizontalRuleProcessor(Bp, Ip):

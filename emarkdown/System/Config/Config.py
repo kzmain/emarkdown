@@ -1,0 +1,4 @@
+CONVERTER_TYPE_HTML = "HTML"
+
+
+converter_mode = CONVERTER_TYPE_HTML

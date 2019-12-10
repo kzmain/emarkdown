@@ -1,6 +1,4 @@
 *.pyc
 *.xml
-*/__pycache__/*
-emarkdown/__pycache__/*.*
-emarkdown/Exceptions/__pycache__/*.pyc
-.idea/workspace.xml
+*.iml
+.idea/*

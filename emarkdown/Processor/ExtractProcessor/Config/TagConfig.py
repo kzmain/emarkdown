@@ -3,7 +3,6 @@ from emarkdown.Processor.ExtractProcessor.Config import TagTypes as Tag
 CONFIG_TYPE_INLINE_SYMMETRY = "inline_symmetry"
 CONFIG_TYPE_BLOCK_SYMMETRY = "block_symmetry"
 
-
 UNCHANGEABLE_TAG = "unchangeable"
 CHANGEABLE_TAG = "changeable"
 
@@ -83,12 +82,36 @@ CONFIG_DICT = {
             }
         },
         CHANGEABLE_TAG: {
-            r"{blue_tag}": {
-                TAG_REGX: r"{blue_tag}",
-                TAG_BASIC_UNIT: r"{blue_tag}",
+            r"{red_note}": {
+                TAG_REGX: r"{red_note}",
+                TAG_BASIC_UNIT: r"{red_note}",
+                TAG_NAME: Tag.TYPE_RED_TAG,
+                TAG_PURE_MD: False
+            },
+            r"{blue_note}": {
+                TAG_REGX: r"{blue_note}",
+                TAG_BASIC_UNIT: r"{blue_note}",
                 TAG_NAME: Tag.TYPE_BLUE_TAG,
                 TAG_PURE_MD: False
-            }
+            },
+            r"{yellow_note}": {
+                TAG_REGX: r"{yellow_note}",
+                TAG_BASIC_UNIT: r"{yellow_note}",
+                TAG_NAME: Tag.TYPE_YELLOW_TAG,
+                TAG_PURE_MD: False
+            },
+            r"{green_note}": {
+                TAG_REGX: r"{green_note}",
+                TAG_BASIC_UNIT: r"{green_note}",
+                TAG_NAME: Tag.TYPE_GREEN_TAG,
+                TAG_PURE_MD: False
+            },
+            r"{grey_note}": {
+                TAG_REGX: r"{grey_note}",
+                TAG_BASIC_UNIT: r"{grey_note}",
+                TAG_NAME: Tag.TYPE_GREY_TAG,
+                TAG_PURE_MD: False
+            },
         }
 
     }

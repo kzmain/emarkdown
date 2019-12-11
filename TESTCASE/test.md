@@ -5,9 +5,28 @@ DD"'''"DD
 http://asdfsa.com
 
 [asdf](http://asdfasd*asdfs*asd.com)
-{blue_tag}asdfsd
+{blue_note}asdfsd
 asdfasdf
-{blue_tag}
+{blue_note}
+
+{red_note}
+This is red tag
+{red_note}
+
+{yellow_note}
+This is red tag
+{yellow_note}
+
+{green_note}
+Coherence to ssmpalee the mention
+{green_note}
+
+{grey_note}
+This is green tag
+{grey_note}
+
+This is wrong {grey_note}This is test{grey_note} asdfads.
+
 
 *   [Overview](#overvi"ew)
     *   [Philosophy](#philosophy)

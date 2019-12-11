@@ -146,8 +146,9 @@ class ConverterController:
                     # Process
                     tag_l = ConverterController.__generate_left_tag(tag_type)
                     tag_r = ConverterController.__generate_right_tag(tag_type)
-                    is_symmetry = True if len([x for x in tag_sub_type.split("<") if x != '']) > 0 else False
-                    if is_symmetry > 0:
+                    # is_symmetry = True if len([x for x in tag_sub_type.split("<") if x != '']) > 0 else False
+                    if tag_type == TagTypes.TYPE_SYMMETRY_INLINE:
+                        tag_sub_type = tag_sub_type.replace("<div", "<span").replace("</div", "</span")
                         tag_l = ConverterController.__generate_left_tag(tag_sub_type, True)
                         tag_r = ConverterController.__generate_right_tag(tag_sub_type, True)
                     elif tag_type == TagTypes.TYPE_LIST_LI:
@@ -177,8 +178,11 @@ class ConverterController:
 
                 tag_l = ConverterController.__generate_left_tag(tag_type)
                 tag_r = ConverterController.__generate_right_tag(tag_type)
-                is_symmetry = True if len([x for x in tag_sub_type.split("<") if x != '']) > 0 else False
-                if is_symmetry > 0:
+
+
+                if tag_type == TagTypes.TYPE_SYMMETRY_INLINE:
+                    if tag_sub_type == TagTypes.TYPE_CODE_BLOCK:
+                        tag_sub_type = "<code>"
                     tag_l = ConverterController.__generate_left_tag(tag_sub_type, True)
                     tag_r = ConverterController.__generate_right_tag(tag_sub_type, True)
                 input_dict[t_uuid] = tag_l + tag_text + tag_r

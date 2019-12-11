@@ -14,7 +14,13 @@ TYPE_PARAGRAPH = "<p>"
 TYPE_BLOCK_QUOTE = "<blockquote>"
 
 TYPE_SYMMETRY_BLOCK = "symmetry_block"
+
+TYPE_RED_TAG = "<div class = \"note red-note alert-type-%s\" role=\"alert\">"
 TYPE_BLUE_TAG = "<div class = \"note blue-note alert-type-%s\" role=\"alert\">"
+TYPE_GREY_TAG = "<div class = \"note grey-note alert-type-%s\" role=\"alert\">"
+TYPE_GREEN_TAG = "<div class = \"note green-note alert-type-%s\" role=\"alert\">"
+TYPE_YELLOW_TAG = "<div class = \"note yellow-note alert-type-%s\" role=\"alert\">"
+
 TYPE_CODE_BLOCK = "CODE_BLOCK"
 # INLINE TYPE ----------------------------------------------------------------------------------------------------------
 TYPE_TABLE_TR = "<tr>"

@@ -12,13 +12,18 @@ class BasicProcessor:
         return NotImplementedError
 
     @staticmethod
-    def html_pre_process(input_text):
-        input_text = input_text.replace("&#", HTML_Entities.ENTITY_DICT["&#"])
-        input_text = input_text.replace("<", HTML_Entities.ENTITY_DICT["<"])
-        input_text = input_text.replace(">", HTML_Entities.ENTITY_DICT[">"])
-        input_text = input_text.replace("\"", HTML_Entities.ENTITY_DICT["\""])
-        input_text = input_text.replace("\'", HTML_Entities.ENTITY_DICT["\'"])
-        return input_text
+    def html_pre_process(in_text):
+        in_text = in_text.replace("&#", HTML_Entities.ENTITY_DICT["&#"])
+        in_text = in_text.replace("\"", HTML_Entities.ENTITY_DICT["\""])
+        in_text = in_text.replace("\'", HTML_Entities.ENTITY_DICT["\'"])
+        in_text = re.sub(r"(?<!(\n))(\n)#", "\n\n#", in_text)
+        tag_regx = r"<((\n)?((?!>).)+)*>"
+        match, b_txt, m_txt, a_txt = BasicProcessor.re_search_get_txt(in_text, regx=tag_regx, flag=re.MULTILINE)
+        while match:
+            m_txt = HTML_Entities.ENTITY_DICT["<"] + m_txt[1:len(m_txt) - 1] + HTML_Entities.ENTITY_DICT[">"]
+            in_text = b_txt + m_txt + a_txt
+            match, b_txt, m_txt, a_txt = BasicProcessor.re_search_get_txt(in_text, regx=tag_regx, flag=re.MULTILINE)
+        return in_text
 
     @staticmethod
     def get_new_dict(tag_text, tag_type, tag_sub_type="", is_inline=True, tag_extension="", new_uuid=None):

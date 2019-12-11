@@ -48,8 +48,8 @@ def check_folder_read_mode(uri):
 def get_res_file_uri(argv_list):
     res_uri = ""
     try:
-        if Parameter.SIGNAL_RES_FILE not in argv_list: raise FileNotFoundError
-        res_uri_index = argv_list.index(Parameter.SIGNAL_RES_FILE) + 1
+        if Parameter.SIGNAL_R_FILE not in argv_list: raise FileNotFoundError
+        res_uri_index = argv_list.index(Parameter.SIGNAL_R_FILE) + 1
         res_uri = argv_list[res_uri_index]
 
         res_uri = os.path.abspath(res_uri)
@@ -72,14 +72,14 @@ def get_res_file_uri(argv_list):
 def get_dest_file_uri(argv_list):
     dest_uri = ""
     try:
-        if Parameter.SIGNAL_DEST_FILE not in argv_list:
+        if Parameter.SIGNAL_D_FILE not in argv_list:
             raise FileNotFoundError
-        file_location_index = argv_list.index(Parameter.SIGNAL_DEST_FILE) + 1
+        file_location_index = argv_list.index(Parameter.SIGNAL_D_FILE) + 1
         dest_uri = argv_list[file_location_index]
 
         dest_uri = os.path.abspath(dest_uri)
 
-        res_uri_index = argv_list.index(Parameter.SIGNAL_RES_FILE) + 1
+        res_uri_index = argv_list.index(Parameter.SIGNAL_R_FILE) + 1
         res_uri = argv_list[res_uri_index]
 
         res_file_name = Path(res_uri)

@@ -16,18 +16,18 @@ class ListProcessor(BasicProcessor):
     # Match first list line's continue sentences
     # Match next line's line signal or normal line
     # list_block_regx = r"(((?<=\n)|(?<!.))(( )*(\*|\-|\+|\d\.))(( )+(?!\n.)(.)*))(((\n)(.)+)*)"
-    list_regx = r"(((?<=\n)|(?<!.))(( )*(\*|\-|\+|\d\.))(( )+(?!\n)(.)*))(((\n)(.)+)|(\n)(\n)( )+.+|(\n)(\n)(( )*(\*|\-|\+|\d\.))(( )+(?!\n)(.)*))*"
-    sub_list_regx = r"( ){%d,}(\d.|\*|\-|\+)( )+.*((\n)( ){%d,}.*)*"
+    list_regx = r"(((?<=\n)|(?<!.))(( )*(\*|\-|\+|\d{1,}\.))(( )+(?!\n)(.)*))(((\n)(.)+)|(\n)(\n)( )+.+|(\n)(\n)(( )*(\*|\-|\+|\d{1,}\.))(( )+(?!\n)(.)*))*"
+    sub_list_regx = r"( ){%d,}(\d{1,}.|\*|\-|\+)( )+.*((\n)( ){%d,}.*)*"
 
-    is_list_line_regx = r"((?<=\n)|(?<!\W|\w))( )*(?=(\d.|\*|\-|\+)( )+)"
+    is_list_line_regx = r"((?<=\n)|(?<!\W|\w))( )*(?=(\d{1,}.|\*|\-|\+)( )+)"
 
     # unordered_regx = r"((?<=\n)|(?<!\W|\w))( )*(\*|\-|\+)( )+.+"
     # ordered_regx = r"((?<=\n)|(?<!\W|\w))( )*(\d.)( )+.+"
     # This only match a element of a list
-    ordered_regx = r"(\n)?(\d\.)( )+.*(\n(?!(\d\.)|\*).*)*"
-    unordered_regx = r"(\n)?(\*|\-|\+)( )+.*(\n(?!(\d\.)|\*|\-|\+).*)*"
+    ordered_regx = r"^(\n)?(\d{1,}\.)( )+.*(\n(?!(\d{1,}\.)|\*).*)*"
+    unordered_regx = r"^(\n)?(\*|\-|\+)( )+.*(\n(?!(\d{1,}\.)|\*|\-|\+).*)*"
     # Match space before list symbol to replace
-    space_regx = r"^( ){%d,%d}(?=\*|\+|\-|\d\.)"
+    space_regx = r"^( ){%d,%d}(?=\*|\+|\-|\d{1,}\.)"
     ls_num = 2
 
     def __init__(self):

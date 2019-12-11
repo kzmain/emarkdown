@@ -28,42 +28,1736 @@
 
 							<!-- Content -->
 								<section>
-
-<hr />
+<h1 id = "performance-of-networked-systems-assignment-2">Performance of Networked Systems Assignment 2</h1>
 <br />
+<h2 id = "homework-assignment-2">Homework assignment 2</h2>
+<p>
+Joseph Groot Kormelink (2655649)<br />
+Kai Zhang(S2666387)
+</p>
 <br />
-
-<hr />
+<h2 id = "question-1-discovering-networks">Question 1 Discovering Networks</h2>
 <br />
-
-<hr />
+<h3 id = "traceroute--m-30-google.com-(vu-campus-wired)-">traceroute -m 30 <a href="http://google.com" title="">google.com</a> (VU campus wired) </h3>
+<p>
+traceroute to <a href="http://google.com" title="">google.com</a> (<a href="http://172.217.168.206" title="">172.217.168.206</a>), 30 hops max, 60 byte packets<br />
+<pre lang="no-highlight">
+<code> 1  130.37.164.2 (130.37.164.2)  0.579 ms  0.603 ms  0.635 ms
+ 2  130.37.250.125 (130.37.250.125)  0.563 ms  0.608 ms  0.652 ms
+ 3  130.37.6.102 (130.37.6.102)  0.320 ms  0.311 ms  0.332 ms
+ 4  130.37.6.92 (130.37.6.92)  1.368 ms  1.397 ms  1.339 ms
+ 5  e5-0.asd003a-jnx-01.surf.net (145.145.20.57)  10.473 ms  10.480 ms  10.473 ms
+ 6  72.14.220.250 (72.14.220.250)  1.179 ms  1.157 ms  1.155 ms
+ 7  * * *
+ 8  172.253.66.184 (172.253.66.184)  1.201 ms 72.14.238.244 (72.14.238.244)  1.153 ms 108.170.236.224 (108.170.236.224)  1.262 ms
+ 9  108.170.241.140 (108.170.241.140)  1.787 ms 108.170.227.3 (108.170.227.3)  1.987 ms 108.170.241.173 (108.170.241.173)  1.270 ms
+ 10  ams16s32-in-f14.1e100.net (172.217.168.206)  1.156 ms 216.239.42.211 (216.239.42.211)  1.701 ms 216.239.42.213 (216.239.42.213)  1.702 ms</code>
+</pre><br />
+<ul>
+<li>
+<p>
+* Bottleneck of this network:<br />
+  <ul>
+<li>
+<p>
+- For fibred network in VU, there&#39;s no bottleneck on transmition method of this network, because all nodes in VU are linked by fiber. The only limitation in VU&#39;s net is the speed of light, which cannot be changed.
+</p>
+</li>
+<li>
+<p>
+- For the net in VU, it has a little constraint on router which exchange info betwenn internal net to out net. The proceecssing time doubled on Hop 4.
+</p>
+</li>
+<li>
+<p>
+- For the net out of VU, it has constrain when it reach the local ISP&#39;s exchange devices, the queueing delay and processing delay happened here.
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+* Travers device and ISPs:<br />
+  Host -> VU Internal Nodes (Hop 1 - Hop 3) -> VU Outer Network Router (Hop 4) -> Surfnet NL Router (Hop 5) -> Google LLC Internal Nodes (Hop 6 - Hop 10)
+</p>
+</li>
+<li>
+<p>
+* Most latency:<br />
+  <ul>
+<li>
+<p>
+- Most latency is introduced from Hop 5 (Surfnet NL Router) which is a Tier 3 ISP, Tier 3 ISP gethers data of an area or building, at ISP&#39;s exchange server there are a lot of transmitions in the queue need to check and to send out. 
+</p>
+</li>
+<li>
+<p>
+- This queuing latency can occur due to exchange point placement. Or, lack of effective peering agreements can cause congestion.
+</p>
+</li>
+<li>
+<p>
+- The processing delay is depend on processing ability of Tier 3&#39;s devices. So if VU want higher Internet Speed, VU need to negotiate with it&#39;s ISP  to have a higher ability device to deal with VU&#39;s net traffic to reduce queueing time and processing time.
+</p>
+</li>
+</ul>
+</p>
+</li>
+</ul>
+</p>
 <br />
+<h3 id = "traceroute--m-30-google.com-(vu-campus-wireless)-">traceroute -m 30 <a href="http://google.com" title="">google.com</a> (VU campus wireless) </h3>
+<p>
+  traceroute to <a href="http://google.com" title="">google.com</a> (<a href="http://172.217.168.206" title="">172.217.168.206</a>), 30 hops max, 60 byte packets<br />
+<pre lang="no-highlight">
+<code> 1  130.37.56.1 (130.37.56.1)  1.994 ms  3.675 ms  1.424 ms
+ 2  130.37.8.81 (130.37.8.81)  2.709 ms  4.750 ms  2.216 ms
+ 3  dhcp-086-009.public.vu.nl (130.37.9.86)  2.067 ms  6.949 ms  1.744 ms
+ 4  130.37.6.102 (130.37.6.102)  1.858 ms  1.519 ms  1.471 ms
+ 5  130.37.6.92 (130.37.6.92)  3.006 ms  2.268 ms  2.223 ms
+ 6  e5-0.asd003a-jnx-01.surf.net (145.145.20.57)  2.282 ms  2.768 ms  2.425 ms
+ 7  72.14.220.250 (72.14.220.250)  2.485 ms  2.414 ms  2.395 ms
+ 8  * * *
+ 9  108.170.237.28 (108.170.237.28)  22.430 ms 108.170.236.134 (108.170.236.134)  8.572 ms 108.170.236.224 (108.170.236.224)  8.851 ms
+10  108.170.241.172 (108.170.241.172)  8.956 ms 108.170.227.9 (108.170.227.9)  3.698 ms 108.170.241.173 (108.170.241.173)  8.691 ms
+11  216.239.41.49 (216.239.41.49)  20.473 ms 216.239.42.213 (216.239.42.213)  12.626 msams16s32-in-f14.1e100.net (172.217.168.206)  12.412 ms</code>
+</pre><br />
+<ul>
+<li>
+<p>
+* Bottleneck of this network:<br />
+  <ul>
+<li>
+<p>
+- In VU internal network, the bottleneck in this method is VU Net to users&#39; devices transfer method. The RTT doubled in first step. This wireless bottleneck depends on both VU side&#39;s and User side&#39;s devices supported protocal and also depends on users&#39; devices distance to nearest WIFI router. As test machine MacBook Pro 2018 supports 802.11ac, which is one of widely used high speed WIFI protocol, and VU also provided high speed connection protocal and with full signal. This limitation cannot be overcome in short time, cause signal transfer speed in air cannot faster than speed of light, but can be decrease by future wireless protocal.<br />
+  - Network out of vu, it seems that on Hop 9 node 1, the RTT suddenly bursted from 2.5 ms to 22.5 ms which nearly 10 time, at the same time it also more than two time of same Hop&#39;s other nodes&#39; RTT time. This means it goes to a router with very high load, may be Google Inc will check this server and balance the traffic between different nodes later.
+</p>
+</li>
+<li>
+<p>
+* Travers device and ISPs:<br />
+  Host -> VU Internal Nodes (Hop 1 - Hop 2) -> VU Outer Network Router (Hop 3 - Hop5) -> Surfnet NL Router (Hop 6 - Hop 7) -> Google LLC Internal Nodes (Hop 9 - Hop 11)
+</p>
+</li>
+<li>
+<p>
+* Most latency:
+</p>
+</li>
+<li>
+<p>
+- For the part in VU, as described in bottleneck of this network and compared to wired type, it is no wonder that Transmission delay of gave the most comtribution to latency in last mile transmission.
+</p>
+</li>
+<li>
+<p>
+- For the part out of VU, as showed in Hop 9 node 1 and compared to other Hops and nodes, proceesing delay and queuing delay contributed most to transmission latency. Google may can check this node and impove their routing methodology to get balance traffic load.
+</p>
+</li>
+</ul>
+</p>
+</li>
+</ul>
+</p>
+<br />
+<h3 id = "traceroute--m-30-google.com-(linode-cloud-server-ipv4)">traceroute -m 30 <a href="http://google.com" title="">google.com</a> (Linode Cloud server IPv4)</h3>
+<p>
+traceroute to <a href="http://172.217.168.206" title="">172.217.168.206</a> (<a href="http://172.217.168.206" title="">172.217.168.206</a>), 30 hops max, 60 byte packets<br />
+<pre lang="no-highlight">
+<code> 1  139.162.128.3 (139.162.128.3)  0.623 ms  0.708 ms  1.026 ms
+ 2  139.162.129.14 (139.162.129.14)  0.502 ms 139.162.129.16 (139.162.129.16)  0.483 ms 139.162.129.14 (139.162.129.14)  0.492 ms
+ 3  139.162.129.9 (139.162.129.9)  0.480 ms  0.475 ms de-cix.fra.google.com (80.81.193.108)  0.993 ms
+ 4  de-cix.fra.google.com (80.81.193.108)  0.989 ms  0.991 ms  0.984 ms
+ 5  209.85.245.30 (209.85.245.30)  4.406 ms 108.170.252.83 (108.170.252.83)  1.468 ms 209.85.252.77 (209.85.252.77)  1.359 ms
+ 6  108.170.229.168 (108.170.229.168)  4.383 ms 209.85.244.158 (209.85.244.158)  7.478 ms 108.170.229.168 (108.170.229.168)  3.893 ms
+ 7  216.239.40.230 (216.239.40.230)  7.430 ms 209.85.244.158 (209.85.244.158)  7.443 ms 209.85.255.231 (209.85.255.231)  9.004 ms
+ 8  108.170.241.193 (108.170.241.193)  7.022 ms 216.239.40.230 (216.239.40.230)  7.283 ms  7.245 ms
+ 9  108.170.241.193 (108.170.241.193)  7.058 ms 108.170.227.9 (108.170.227.9)  7.485 ms 108.170.241.225 (108.170.241.225)  8.078 ms
+10  ams16s32-in-f14.1e100.net (172.217.168.206)  6.895 ms  6.839 ms  6.805 ms</code>
+</pre><br />
+<ul>
+<li>
+<p>
+* Bottleneck of this network:<br />
+  <ul>
+<li>
+<p>
+- For fibred network on Linode LLC&#39;s clould there&#39;s no bottleneck on transmition method of this network, because all nodes are linked by fiber. The only limitation is the speed of light. 
+</p>
+</li>
+<li>
+<p>
+- For the part out of Linode company, the RTT becomes high  from Hop5, this is because of two reasons. One is light transfer time from Germany to America. Another is processing latency and queuing latency from Google&#39;s server. 
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+* Travers device and ISPs:<br />
+  Host -> Linode Internal Nodes (Hop 1 - Hop 3) -> DE-CIX Management GmbH (Hop 4) -> Google LLC Internal Nodes (Hop 5 - Hop 10)
+</p>
+</li>
+<li>
+<p>
+* Most latency:<br />
+  In this circumstance, it is very interesting, the Linode&#39;s server is directly linked to Tier 1 ISP, DE-CIX Management GmbH. Futhermore, all nodes are connected with fiber. The most latency is introduced queuing delay and processing at Hop 4. In contrast with VU wired, it shows that the more ability of the exchange server from ISP the less (processing) latency to end users. It also shows that the last mile problem is not only related with how the data/trasmitions is/are delivered but also related with Tier 3 ISP devices&#39; capacity.
+</p>
+</li>
+</ul>
+</p>
+<br />
+<h3 id = "traceroute--6--m-30-google.com-(linode-cloud-server-ipv6)">traceroute -6 -m 30 <a href="http://google.com" title="">google.com</a> (Linode Cloud server IPv6)</h3>
+<a href="http://2a00:1450:4001:81c::200e" title="">2a00:1450:4001:81c::200e</a>
+<pre lang="no-highlight">
+<code>traceroute to google.com (2a00:1450:4001:81c::200e), 30 hops max, 80 byte packets
+ 1  2a01:7e01::5287:89ff:fe40:a1c1 (2a01:7e01::5287:89ff:fe40:a1c1)  1.477 ms  1.500 ms  1.562 ms
+ 2  2a01:7e01:d::1 (2a01:7e01:d::1)  0.464 ms  0.466 ms 2a01:7e01:c::1 (2a01:7e01:c::1)  1.104 ms
+ 3  2a01:7e01:5::2 (2a01:7e01:5::2)  0.450 ms  0.500 ms  1.077 ms
+ 4  de-cix.fra.google.com (2001:7f8::3b41:0:2)  1.078 ms  1.073 ms  1.070 ms
+ 5  2001:4860:0:1::693 (2001:4860:0:1::693)  1.063 ms 2001:4860:0:11e1::1 (2001:4860:0:11e1::1)  2.103 ms  2.114 ms
+ 6  2001:4860:0:1::691 (2001:4860:0:1::691)  1.047 ms fra15s17-in-x0e.1e100.net (2a00:1450:4001:81c::200e)  1.171 ms  1.033 ms</code>
+</pre>
+<ul>
+<li>
+<p>
+* Bottleneck of this network:<br />
+  It uses the same device and internal network to connect to google, but in IPv6. There&#39;s no bottleneck on transmition method of this network, too, because all nodes are linked by fiber. The only limitation is the speed of light.
+</p>
+</li>
+<li>
+<p>
+* Travers device and ISPs:<br />
+  Host -> Linode Internal Nodes (Hop 1 - Hop 3) -> DE-CIX Management GmbH (Hop 4) -> Google LLC Internal Nodes (Hop 5 - Hop 6)
+</p>
+</li>
+<li>
+<p>
+* Most latency:
+</p>
+</li>
+<li>
+<p>
+- In this circumstance, it is very interesting, the Linode&#39;s server is directly linked to Tier 1 ISP, DE-CIX Management GmbH IPv6 Peer. Futhermore, all nodes are connected with fiber. The most latency is introduced from queueing latency and processing latency at Hop 4. Most the same network condition with IPv4, but it is always faster no matter on which Hop.<br />
+  <ul>
+<li>
+<p>
+- In contrast with IPv4 and IPv6, it shows that IPv6 is much faster. This is not because IPv6 protocal is much better than IPv4 protocal. It because that IPv6 network is less used so lesss queueing time and less processing time for IPv6 requests.
+</p>
+</li>
+<li>
+<p>
+- It also proved that previous network congestion was mainly due to queuing & processing delay, not only Propagation delay.
+</p>
+</li>
+</ul>
+</p>
+</li>
+</ul>
+<br />
+<h3 id = "traceroute--m-30-google.com-(home-wired)-">traceroute -m 30 <a href="http://google.com" title="">google.com</a> (home wired) </h3>
+<p>
+traceroute  -m 30 <a href="http://172.217.168.206" title="">172.217.168.206</a> <br />
+<pre lang="no-highlight">
+<code>traceroute to 172.217.168.206 (172.217.168.206), 30 hops max, 60 byte packets
+ 1  _gateway (192.168.1.1)  0.425 ms  0.396 ms  0.377 ms
+ 2  ip-80-113-224-1.ip.prioritytelecom.net (80.113.224.1)  8.128 ms  8.114 ms  8.093 ms
+ 3  ip-80-113-24-209.ip.prioritytelecom.net (80.113.24.209)  3.340 ms  4.336 ms  4.748 ms
+ 4  asd-tr0021-cr101-be112-2.core.as33915.net (213.51.7.92)  3.267 ms  4.960 ms  3.867 ms
+ 5  asd-tr0021-cr101-be112-2.core.as33915.net (213.51.7.92)  3.175 ms  4.883 ms  3.137 ms
+ 6  nl-ams14a-ri1-ae51-0.aorta.net (213.51.64.186)  3.472 ms  3.349 ms  3.606 ms
+ 7  10ge-1-4.cr1.ams2.baseip.com (213.46.182.22)  3.867 ms  3.844 ms  3.822 ms
+ 8  * * *
+ 9  108.170.237.28 (108.170.237.28)  3.158 ms 108.170.241.161 (108.170.241.161)  6.450 ms 108.170.236.134 (108.170.236.134)  3.410 ms
+10  108.170.227.9 (108.170.227.9)  6.679 ms 108.170.241.172 (108.170.241.172)  6.392 ms  6.377 ms
+11  ams16s32-in-f14.1e100.net (172.217.168.206)  6.346 ms  6.339 ms 216.239.42.211 (216.239.42.211)  5.830 ms</code>
+</pre><br />
+<ul>
+<li>
+<p>
+* Bottleneck of this network:<br />
+  It has a gateway router before it links to world wide internet, this router&#39;s weak bandwidth and ability to resolve bursts makes it the bottleneck of this network.
+</p>
+</li>
+<li>
+<p>
+* Travers device and ISPs:<br />
+  <ul>
+<li>
+<p>
+- Host -> Home gateway router (Hop 1) -> Priority Telecom ISP servers (Hop 2 - Hop 3) -> Vodafone Libertel B.V ISP servers (Hop 4 - Hop 5) -> Ziggo Community ISP servers (Hop 6) -> Base IP B.V. ISP servers (Hop 7) -> Google LLC Internal Nodes (Hop 9 - Hop 11)
+</p>
+</li>
+<li>
+<p>
+- Note: Priority Telecom, Vodafone Libertel B.V., Ziggo Community, Base IP B.V. all belong to Vodafone&#39;s network
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+* Most latency:<br />
+  Most latency is introduced at Hop 2, it combined two part. The first is part is because the home router&#39;s weak ability which will introduce processing latency. The second part is because exchange server of ISP have lots of users&#39; requests to process and queueing. It also introduce processing and queueing latency.
+</p>
+</li>
+</ul>
+</p>
+<br />
+<h3 id = "traceroute--m-30-google.com-(home-wireless)-">Traceroute -m 30 <a href="http://google.com" title="">google.com</a> (home wireless) </h3>
+<p>
+traceroute  -m 30 <a href="http://172.217.168.206" title="">172.217.168.206</a> <br />
+<pre lang="no-highlight">
+<code>traceroute to 172.217.168.206 (172.217.168.206), 30 hops max, 60 byte packets
+ 1  _gateway (192.168.1.1)  7.565 ms  8.326 ms  8.297 ms
+ 2  ip-80-113-224-1.ip.prioritytelecom.net (80.113.224.1)  28.472 ms  28.924 ms  28.898 ms
+ 3  * * *
+ 4  asd-tr0021-cr101-be112-2.core.as33915.net (213.51.7.92)  11.106 ms  11.814 ms  11.774 ms
+ 5  asd-tr0021-cr101-be112-2.core.as33915.net (213.51.7.92)  10.705 ms  10.962 ms  10.937 ms
+ 6  nl-ams14a-ri1-ae51-0.aorta.net (213.51.64.186)  11.177 ms  6.011 ms  11.662 ms
+ 7  10ge-1-4.cr1.ams2.baseip.com (213.46.182.22)  8.341 ms  8.878 ms  9.524 ms
+ 8  * * *
+ 9  108.170.236.222 (108.170.236.222)  9.493 ms 108.170.241.161 (108.170.241.161)  9.333 ms 108.170.237.28 (108.170.237.28)  9.477 ms
+10  108.170.241.173 (108.170.241.173)  9.312 ms 108.170.227.9 (108.170.227.9)  9.306 ms 108.170.227.3 (108.170.227.3)  10.941 ms
+11  ams16s32-in-f14.1e100.net (172.217.168.206)  10.419 ms  10.893 ms  10.889 ms</code>
+</pre><br />
+<ul>
+<li>
+<p>
+* Bottleneck of this network<br />
+  <ul>
+<li>
+<p>
+- Transfer media type & device ability: WIFI 2.4 GHZ 802.11.g, it&#39;s max data rate is 300 Mbps which is much slower than wired connection.
+</p>
+</li>
+<li>
+<p>
+- Router&#39;s processing ability: Router&#39;s weak bandwidth and ability to resolve bursts makes it the bottleneck of this network.
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+* Travers device and ISPs:<br />
+  <ul>
+<li>
+<p>
+- Host -> Home gateway router (Hop 1) -> Priority Telecom ISP servers (Hop 2) -> Vodafone Libertel B.V ISP servers (Hop 4 - Hop 5) -> Ziggo Community ISP servers (Hop 6) -> Base IP B.V. ISP servers (Hop 7) -> Google LLC Internal Nodes (Hop 9 - Hop 11)
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+* Most latency:<br />
+  Most latency is introduced at Hop 1, it slows trasmition rate a lot, which incsreas from mean 0.4 ms to 8 ms. Moreover, processing ability of the user&#39;s router also introduced processsing latency to the requests.
+</p>
+</li>
+</ul>
+</p>
+<br />
+<h3 id = "conclusion">Conclusion</h3>
+<p>
+It shows that the last mile problem related with following points:<br />
+<ol>
+<li>
+<p>
+1. transmition deliver type<br />
+  <ul>
+<li>
+<p>
+* wired or wirelessed 
+</p>
+</li>
+<li>
+<p>
+* fiber or copper wired
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+2. Routing methodology
+</p>
+</li>
+<li>
+<p>
+3. ISP devices processing ability<br />
+  <ul>
+<li>
+<p>
+* ISP&#39;s devices, especially Tier 3 ISP&#39;s devices, processing ability is very important.
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+4. user&#39;s related device processing ability<br />
+  <ul>
+<li>
+<p>
+* router&#39;s processing ability
+</p>
+</li>
+<li>
+<p>
+* router&#39;s in/out bandwith
+</p>
+</li>
+<li>
+<p>
+* target device bandwidth and so on
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+5. Transmition density<br />
+  Different transmition communication protocal or different location can have different transmition density.
+</p>
+</li>
+</ol>
+</p>
+<br />
+<h2 id = "question-2-deep-packet-analysis">Question 2 Deep Packet Analysis</h2>
+<br />
+<h3 id = "2.1.-provided-trace">2.1. Provided trace</h3>
+<br />
+<h4 id = "for-all-protocal">For all protocal</h4>
+<ul>
+<li>
+<p>
+* The IP address of the hosts of interest is <a href="http://10.0.2.15" title="">10.0.2.15</a>(IPv4) and <a href="http://fe80::bedd:b62f:33c9:a477" title="">fe80::bedd:b62f:33c9:a477</a> (IPv6), because all HTTP GET/POST request send from the IPv4 and all TCP&#39;s SYN, which is start of TCP signal send from local to remote server to establish TCP connection, is sent from this IPv4. The UDP requests all send from these two IPs.
+</p>
+</li>
+</ul>
+<br />
+<h4 id = "ip-protocal">IP Protocal</h4>
+<ol>
+<li>
+<p>
+1. IP Protocal has two types: <br />
+  <ul>
+<li>
+<p>
+* Internet Protocol Version 6 (IPv6): <a href="http://fe80::bedd:b62f:33c9:a477" title="">fe80::bedd:b62f:33c9:a477</a> (IPv6 Location)
+</p>
+</li>
+<li>
+<p>
+* Internet Protocol Version 4 (IPv4): <a href="http://10.0.2.15" title="">10.0.2.15</a> (IPv4 Location)
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+2. Different IP Protocal Statistics:<br />
+  <ul>
+<li>
+<p>
+* IPv6: 6 Packets (0.01%)
+</p>
+</li>
+<li>
+<p>
+* IPv4: 35952 Packets (99.99%)
+</p>
+</li>
+<li>
+<p>
+* All: 35958<br />
+  This means our interest host does not use IPv6 service much.
+</p>
+</li>
+</ul>
+</p>
+</li>
+</ol>
+<br />
+<h4 id = "tcp-protocal">TCP Protocal</h4>
+<ol>
+<li>
+<p>
+1. TCP Protocal Statics:<br />
+  <ul>
+<li>
+<p>
+* TCP Packets: 33851 Packets 
+</p>
+</li>
+<li>
+<p>
+* TCP Percentages: 33851 / 35958 = 94.1%
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+2. TCP Round Trip Time<br />
+  As RTT defninition, it is depends on two hosts&#39; location, the closer two host are, the lower RTT time.<br />
+  <ul>
+<li>
+<p>
+* <a href="http://10.0.2.15" title="">10.0.2.15</a> &#60;=&#62; <a href="http://211.152.136.73" title="">211.152.136.73</a><br />
+  Location: Shenzhen, China<br />
+  RTT Min around: 0.035ms <br />
+  RTT Max around:  1.3ms<br />
+  <img src="211-152-136-73.png" alt="211-152-136-73" title=""><br />
+  Windows Scaling Min: 65535 Bytes<br />
+  Windows Scaling Max: 76749 Bytes<br />
+  <img src="211-152-136-73w.png" alt="211-152-136-73w" title="">
+</p>
+</li>
+<li>
+<p>
+* <a href="http://10.0.2.15" title="">10.0.2.15</a> &#60;=&#62; <a href="http://1.31.173.91" title="">1.31.173.91</a><br />
+  Location: Inner Mongolia Autonomous Region (NM), China<br />
+  RTT Min around: 0.0175ms <br />
+  RTT Max around: 0.026ms <br />
+  <img src="1-31-173-91.png" alt="1-31-173-91" title=""><br />
+  Windows Scaling Min: 64240 Bytes<br />
+  Windows Scaling Max: 63900 Bytes<br />
+  <img src="1-31-173-91w.png" alt="1-31-173-91w" title="">
+</p>
+</li>
+<li>
+<p>
+* <a href="http://10.0.2.15" title="">10.0.2.15</a> &#60;=&#62; <a href="http://175.100.207.205" title="">175.100.207.205</a><br />
+  Location: Hong Kong, China<br />
+  RTT Min around: 0.009ms <br />
+  RTT Middle around: 0.02ms <br />
+  RTT Max around: 0.046ms <br />
+  <img src="175-100-207-205.png" alt="175-100-207-205" title=""><br />
+  Windows Scaling Min: 56800 Bytes<br />
+  Windows Scaling Max: 63900 Bytes<br />
+  <img src="175-100-207-205w.png" alt="175-100-207-205w" title="">
+</p>
+</li>
+<li>
+<p>
+* <a href="http://10.0.2.15" title="">10.0.2.15</a> &#60;=&#62; <a href="http://74.125.100.40" title="">74.125.100.40</a><br />
+  Location: United States (US), North America<br />
+  RTT Min around: 0.8ms <br />
+  RTT Middle around: 3.1ms <br />
+  RTT Max around: 5.78ms <br />
+  <img src="74-125-100-40.png" alt="74-125-100-40" title=""><br />
+  Windows Scaling Min: 65535 Bytes<br />
+  Windows Scaling Max: 65535 Bytes<br />
+  <img src="74-125-100-40w.png" alt="74-125-100-40w" title="">
+</p>
+</li>
+<li>
+<p>
+* <a href="http://10.0.2.15" title="">10.0.2.15</a> &#60;=&#62; <a href="http://47.246.48.251" title="">47.246.48.251</a><br />
+  Location: United States (US), California (CA), North America<br />
+  RTT Min around: 2.02ms <br />
+  RTT Max around: 7.6ms<br />
+  <img src="47-246-48-251.png" alt="47-246-48-251" title=""><br />
+  Windows Scaling Min: 65535 Bytes<br />
+  Windows Scaling Max: 65535 Bytes<br />
+  <img src="47-246-48-251w.png" alt="47-246-48-251s" title="">
+</p>
+</li>
+<li>
+<p>
+* <a href="http://10.0.2.15" title="">10.0.2.15</a> &#60;=&#62; <a href="http://185.94.180.126" title="">185.94.180.126</a><br />
+  Location: Netherlands (NL), Europe<br />
+  RTT Min around: 0.7ms <br />
+  RTT Middle around: 3ms <br />
+  RTT Min around: 6.6ms <br />
+  <img src="185-94-180-126.png" alt="185-94-180-126" title=""><br />
+  Windows Scaling Min: 65535 Bytes<br />
+  Windows Scaling Max: 65535 Bytes<br />
+  <img src="185-94-180-126w.png" alt="185-94-180-126w" title=""><br />
+It seems that the interest host is somewhere around China, or in High Speed Internet Asian country.
+</p>
+</li>
+</ul>
+</p>
+</li>
+</ol>
+<br />
+<h4 id = "udp-protocal">UDP Protocal</h4>
+<ol>
+<li>
+<p>
+1. UDP Protocal Statics:<br />
+  <ul>
+<li>
+<p>
+* UDP Packets: 2073(IPv4) + 6(IPv6) Packets 
+</p>
+</li>
+<li>
+<p>
+* UDP Percentages: 2079 / 35958 = 5.9%
+</p>
+</li>
+</ul>
+</p>
+</li>
+</ol>
+<br />
+<h4 id = "http-protocal">HTTP Protocal</h4>
+<ol>
+<li>
+<p>
+1. HTTP Protocal Statics:<br />
+  <ul>
+<li>
+<p>
+* HTTP Packets: 1756 Packets 
+</p>
+</li>
+<li>
+<p>
+* HTTP Packets Percentage: 1756 / 35958 = 4.9%
+</p>
+</li>
+<li>
+<p>
+* HTTP Bytes: 21680719 Bytes
+</p>
+</li>
+<li>
+<p>
+* HTTP Bytes Percantage: 21680719 / 98137444 = 22.1%
+</p>
+</li>
+<li>
+<p>
+* Data types that consume the most traffic: Media/Pictures (PNG Files(2%) + JPEG Files(9%) + MEDIA Files(8.5%) = 19.5% of all Data Bytes)<br />
+  <img src="http.png" alt="http" title="">
+</p>
+</li>
+</ul>
+</p>
+</li>
+</ol>
+<br />
+<h3 id = "2.2-own-trace">2.2 Own trace</h3>
+<br />
+<h4 id = "for-all-protocal">For all protocal</h4>
+<ul>
+<li>
+<p>
+* The IP address of the hosts of interest is <code>192.168.0.1</code> on local network, <code>80.113.225.127</code> on Dynamic IP (IPv4) and <code>fe80::8f3:92ff:fe9b:5d34</code> (IPv6), because all HTTP GET/POST request send from the IPv4 and all TCP&#39;s SYN, which is start of TCP signal send from local to remote server to establish TCP connection, is sent from this IPv4. The UDP requests all send from these two IPs.
+</p>
+</li>
+<li>
+<p>
+* Total Transfered Bytes: 43768859 Bytes
+</p>
+</li>
+</ul>
+<br />
+<h4 id = "ip-protocal">IP Protocal</h4>
+<ol>
+<li>
+<p>
+1. IP Protocal has two types: <br />
+  <ul>
+<li>
+<p>
+* Internet Protocol Version 6 (IPv6): <a href="http://fe80::8f3:92ff:fe9b:5d34" title="">fe80::8f3:92ff:fe9b:5d34</a> (IPv6 Location)
+</p>
+</li>
+<li>
+<p>
+* Internet Protocol Version 4 (IPv4): <code>192.168.0.1</code>(Local Host), <code>80.113.225.127</code> on Dynamic IP (IPv4)
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+2. Different IP Protocal Statistics:<br />
+  <ul>
+<li>
+<p>
+* IPv6 Packets: 236 Packets (0.4%)
+</p>
+</li>
+<li>
+<p>
+* IPv4 Packets: 54560 Packets (99.6%)
+</p>
+</li>
+<li>
+<p>
+* All: 54861<br />
+  This means our choiced host does not use IPv6 service much.
+</p>
+</li>
+</ul>
+</p>
+</li>
+</ol>
+<br />
+<h4 id = "tcp-protocal">TCP Protocal</h4>
+<ol>
+<li>
+<p>
+1. TCP Protocal Statics:<br />
+  <ul>
+<li>
+<p>
+* TCP Packets: 21457 Packets 
+</p>
+</li>
+<li>
+<p>
+* TCP Percentages: 21457 / 54861 = 39.1%
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+2. TCP Round Trip Time<br />
+  As RTT defninition, it is depends on two hosts&#39; location, the closer two host are, the lower RTT time.<br />
+  <ul>
+<li>
+<p>
+* <a href="http://192.168.0.1" title="">192.168.0.1</a> &#60;=&#62; <a href="http://92.123.165.41" title="">92.123.165.41</a><br />
+  Location: Netherlands, Europe<br />
+  RTT Min around: 8.3ms<br />
+  RTT Max around:  14.6ms<br />
+  <img src="92-123-165-41.png" alt="92-123-165-41" title=""><br />
+  Windows Scaling Min: 30080 Bytes<br />
+  Windows Scaling Max: 31104 Bytes<br />
+  <img src="92-123-165-41w.png" alt="92-123-165-41w" title="">
+</p>
+</li>
+<li>
+<p>
+* <a href="http://192.168.0.1" title="">192.168.0.1</a> &#60;=&#62; <a href="http://64.58.121.60" title="">64.58.121.60</a><br />
+  Location: Ashburn, United States, North America<br />
+  RTT Min around: 161ms<br />
+  RTT Max around:  205ms<br />
+  <img src="64-58-121-60.png" alt="64-58-121-60" title=""><br />
+  Windows Scaling Min: 9216 Bytes<br />
+  Windows Scaling Max: 17400 Bytes<br />
+  <img src="64-58-121-60w.png" alt="64-58-121-60w" title="">
+</p>
+</li>
+<li>
+<p>
+* <a href="http://192.168.0.1" title="">192.168.0.1</a> &#60;=&#62; <a href="http://58.251.82.205" title="">58.251.82.205</a><br />
+  Location: GuangZhou, China, Asia<br />
+  RTT Min around: 289ms<br />
+  RTT Max around:  404ms<br />
+  <img src="58-251-82-205.png" alt="58-251-82-205" title=""><br />
+  Windows Scaling Min: 443 Bytes<br />
+  Windows Scaling Max: 443 Bytes<br />
+  <img src="58-251-82-205w.png" alt="58-251-82-205w" title=""><br />
+The Netherlands RTT is the shortest among three cases, also along with real situation.
+</p>
+</li>
+</ul>
+</p>
+</li>
+</ol>
+<br />
+<h4 id = "udp-protocal">UDP Protocal</h4>
+<ol>
+<li>
+<p>
+1. UDP Protocal Statics:<br />
+  <ul>
+<li>
+<p>
+* UDP Packets: 33077(IPv4) + 63(IPv6) Packets 
+</p>
+</li>
+<li>
+<p>
+* UDP Packets Percentages: 33140 / 54861 = 60.4%
+</p>
+</li>
+<li>
+<p>
+* UDP Transfered Bytes Percentages: 35084090 / 43768859 = 80.2%<br />
+This means the example host is mainly interacting with UDP based applications. It have high percentage that user is having fun with Video/Audio/Games.
+</p>
+</li>
+</ul>
+</p>
+</li>
+</ol>
+<br />
+<h4 id = "http-protocal">HTTP Protocal</h4>
+<ol>
+<li>
+<p>
+1. HTTP Protocal Statics:<br />
+  <ul>
+<li>
+<p>
+* HTTP Packets: 16 Packets 
+</p>
+</li>
+<li>
+<p>
+* HTTP Packets Percentage: 16 / 54861 = 0.029%<br />
+  <img src="http_own.png" alt="http_own" title="">
+</p>
+</li>
+</ul>
+</p>
+</li>
+</ol>
+<br />
+<h2 id = "question-3-performance-of-mobile-apps">Question 3 Performance of Mobile Apps</h2>
+<br />
+<h3 id = "3.1.-analysis:-clothing-for-primark-app">3.1. Analysis: Clothing for Primark app</h3>
+<ol>
+<li>
+<p>
+1. Text File Compression<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  8% of text files were sent out without compression. Text compression can reduce time delivery time.
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  But for current Primark app it is not a big problem. From the table and the video we found that, <code>staticxx.facebook.com</code> is not requested by the app. Only 1810 + 1984 + 27018 = 30812 Bytes, less than 4% text files are sent in non-compressed type over network. But it still need attention, because app&#39;s related request time is around 200ms - 300ms which can affect user experience. App development needs attention on data transfer compression.<br />
 <table>
-  <tr>
-      <th>Head 1</th>
-      <th>Head 2</th>
-      <th>Head 3</th>
-      <th></th>
-  </tr>
-  <tr>
-      <td>Body 1</td>
-      <td>Body 2</td>
-      <td>Body 3</td>
-      <td></td>
-  </tr>
-  <tr>
-      <td>Body 4</td>
-      <td>Body 5</td>
-      <td>Body 6</td>
-      <td></td>
-  </tr>
-  <tr>
-      <td>Body 7</td>
-      <td>Body 8</td>
-      <td>Body 3</td>
-      <td>sadfas</td>
-  </tr>
+<tr>
+<th></th>
+<th>Time</th>
+<th>Host Name</th>
+<th>File Size</th>
+</tr>
+<tr>
+<td></td>
+<td>41.51699995994568</td>
+<td><a href="http://staticxx.facebook.com" title="">staticxx.facebook.com</a></td>
+<td>33360</td>
+</tr>
+<tr>
+<td></td>
+<td>226.3140001296997</td>
+<td><a href="http://tags.bluekai.com" title="">tags.bluekai.com</a></td>
+<td>1810</td>
+</tr>
+<tr>
+<td></td>
+<td>281.02500009536743</td>
+<td><a href="http://d2xgf76oeu9pbh.cloudfront.net" title="">d2xgf76oeu9pbh.cloudfront.net</a></td>
+<td>1984</td>
+</tr>
+<tr>
+<td></td>
+<td>289.6470000743866</td>
+<td><a href="http://d303e3cdddb4ded4b6ff495a7b496ed5.s3.amazonaws.com" title="">d303e3cdddb4ded4b6ff495a7b496ed5.s3.amazonaws.com</a></td>
+<td>27018</td>
+</tr>
+</table><br />
+  
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+2. Duplicate Content<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  The duplicate content request start with <code>/fr/...</code> is requested by <code>facebook.com</code> so it is not related with this app. Another dupicate request <code>\error_404</code> is linked with current app.<br />
+  Though the ATT Video Optimizer did not show it has problem, it shows potential problem on app development. It means some special static page (like error page) is not cached on app and need to request from server a lot of time.<br />
+<table>
+<tr>
+<th></th>
+<th>File Size</th>
+<th>Count</th>
+<th>File Name</th>
+</tr>
+<tr>
+<td></td>
+<td>57</td>
+<td>2</td>
+<td>/fr/u.php?t=2592000&p=443937282305007&m=M2YzNmYzOTI1YzhkZTMzNDNjZjE2ODFmNGZjNDNiZGI</td>
+</tr>
+<tr>
+<td></td>
+<td>13253</td>
+<td>4</td>
+<td><a href="http:///error_404.aspx?aspxerrorpath=/checkpage.aspx" title="">/error_404.aspx?aspxerrorpath=/checkpage.aspx</a></td>
+</tr>
 </table>
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  This 404 page is quite large, which can be stored in cache of app once the app get 404 status, it can show the app version error page directly, which is also can be implemented to other error pages.<br />
+  
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+3. Cache control<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  Absence of cache headers 17% of times.
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  The app contains a lot of images, the app request the images every time the app needs. Those images need a lot of bandwiths to transfer, but a lot of dupilcate request. It can cache pictures in app, so that can reuse the images, and set a timeout that can check if there&#39;s new version of image updated.<br />
+  
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+4. Combine JS and CSS Requests<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  Multiple requests for CSS or JS can slow loading. Multiple CSS or JS need more requests from the server, it need wait more time because the application need more RTT time.
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  Combines the JS files and CSS files of <a href="http://primark.com" title="">primark.com</a><br />
+  
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+5. Resize Images for Mobile<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  When the app got image requests from primark server, either from <code>primark.com</code> or from <code>10.120.0.1</code>, it did not check if there is mobile version and smaller version for mobile. It downloaded desktop vernsion and big high-quality, which is too high for mobile, directly and wasted times.<br />
+<table>
+<tr>
+<th></th>
+<th>Time</th>
+<th>Host Name</th>
+<th>Image Size</th>
+</tr>
+<tr>
+<td></td>
+<td>4.676000118255615</td>
+<td><a href="http://www.primark.com" title="">www.primark.com</a></td>
+<td>25073</td>
+</tr>
+<tr>
+<td></td>
+<td>23.061000108718872</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>643061</td>
+</tr>
+<tr>
+<td></td>
+<td>23.026000022888184</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>31646</td>
+</tr>
+<tr>
+<td></td>
+<td>23.187999963760376</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>540811</td>
+</tr>
+<tr>
+<td></td>
+<td>23.006999969482422</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>138314</td>
+</tr>
+<tr>
+<td></td>
+<td>23.03500008583069</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>187140</td>
+</tr>
+<tr>
+<td></td>
+<td>23.246000051498413</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>131659</td>
+</tr>
+<tr>
+<td></td>
+<td>23.325000047683716</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>25073</td>
+</tr>
+<tr>
+<td></td>
+<td>55.71600008010864</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>44295</td>
+</tr>
+<tr>
+<td></td>
+<td>55.71399998664856</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>117752</td>
+</tr>
+<tr>
+<td></td>
+<td>55.746999979019165</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>103291</td>
+</tr>
+<tr>
+<td></td>
+<td>55.74300003051758</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>78705</td>
+</tr>
+<tr>
+<td></td>
+<td>55.72099995613098</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>121184</td>
+</tr>
+<tr>
+<td></td>
+<td>55.75500011444092</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>158516</td>
+</tr>
+<tr>
+<td></td>
+<td>131.55100011825562</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>128679</td>
+</tr>
+<tr>
+<td></td>
+<td>131.6579999923706</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>112053</td>
+</tr>
+<tr>
+<td></td>
+<td>131.74300003051758</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>109907</td>
+</tr>
+<tr>
+<td></td>
+<td>131.77500009536743</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>131659</td>
+</tr>
+<tr>
+<td></td>
+<td>170.92300009727478</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>435603</td>
+</tr>
+<tr>
+<td></td>
+<td>170.99900007247925</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>112036</td>
+</tr>
+<tr>
+<td></td>
+<td>170.92899990081787</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>1623</td>
+</tr>
+<tr>
+<td></td>
+<td>171.00600004196167</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>91737</td>
+</tr>
+</table><br />
+  It also had many requests from ebay.<br />
+<table>
+<tr>
+<th></th>
+<th>Time</th>
+<th>Host Name</th>
+<th>Image Size</th>
+</tr>
+<tr>
+<td></td>
+<td>205.92199993133545</td>
+<td><a href="http://ir.ebaystatic.com" title="">ir.ebaystatic.com</a></td>
+<td>12716</td>
+</tr>
+<tr>
+<td></td>
+<td>205.90700006484985</td>
+<td><a href="http://ir.ebaystatic.com" title="">ir.ebaystatic.com</a></td>
+<td>17228</td>
+</tr>
+<tr>
+<td></td>
+<td>221.53900003433228</td>
+<td><a href="http://ir.ebaystatic.com" title="">ir.ebaystatic.com</a></td>
+<td>15586</td>
+</tr>
+<tr>
+<td></td>
+<td>221.88899993896484</td>
+<td><a href="http://ir.ebaystatic.com" title="">ir.ebaystatic.com</a></td>
+<td>5251</td>
+</tr>
+<tr>
+<td></td>
+<td>232.12800002098083</td>
+<td><a href="http://i.ebayimg.com" title="">i.ebayimg.com</a></td>
+<td>92296</td>
+</tr>
+<tr>
+<td></td>
+<td>232.63499999046326</td>
+<td><a href="http://i.ebayimg.com" title="">i.ebayimg.com</a></td>
+<td>61949</td>
+</tr>
+<tr>
+<td></td>
+<td>237.99300003051758</td>
+<td><a href="http://i.ebayimg.com" title="">i.ebayimg.com</a></td>
+<td>76054</td>
+</tr>
+</table>
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  - For those requests from <code>primark.com</code> and <code>10.120.0.1</code>, developers can make multiple version/size pics for different target devices, like desktop, pad, mobiles.<br />
+  - For those requests from <code>primark.com</code> and <code>10.120.0.1</code>, developers can make a script to check target deivce&#39;s ppi, width and hight and request right version pics.<br />
+  - For thos requests from ebay we can do nothing, because it directly access the web page from Ebay Inc.<br />
+    
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+6. Image Compression<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  The app requested a lot of big pics from server for display. If it can be compressed, it will save a lot of space.
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  Shrink the physical size of the image by keeping the proportions while making the whole thing smaller. In other words, a 60 x 60 pixel image is reduced to 40 x 40 pixels.<br />
+  
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+7. Image Format<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  Newer image formats (like WebP for Android and JPEG2000 for iOS) feature the same visual quality as traditional formats (like JPEG and GIF, etc.) but offer much higher compression. But in this app it almost all uses <code>.jpg</code> files to display things.
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  Developers can make <code>.WebP</code> and <code>JPEG2000</code> image backup for different devices.<br />
+  Developers can make a script to check target deivce&#39;s OS, and diliver corresponding righ version images.<br />
+  
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+8. Minify CSS,JS and HTML<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  Many text files contain excess whitespace to allow for better human coding. There are many spaces in or CSS/JS/HTML file
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  Preporcess the CSS/JS/HTML files, remove unnecessary spaces of them before they send out.<br />
+  
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+9. Use CSS Sprites for Images<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  Some small and simple images like banner/logo/icon and so on can be generatetd by css. We can combine these to css files. Furturemore, many of them consumes nearly 300ms, if it will replaced by css it will reduce request time a lot,.
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  Use CSS to generate small simage iamges linke banner/logo/icons.<br />
+  
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+10. Unnecessary Connections - Multiple Simulateneous Connections<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  Mutiple communication result to one customer require much more capacity from the app server. This leads to the app company can serve less actual customer.<br />
+<table>
+<tr>
+<th></th>
+<th>Time</th>
+<th>IP</th>
+<th>Domain Name</th>
+<th>No of connections</th>
+</tr>
+<tr>
+<td></td>
+<td>21.332</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+<td>33</td>
+</tr>
+<tr>
+<td></td>
+<td>226.77</td>
+<td><a href="http://23.206.93.243" title="">23.206.93.243</a></td>
+<td><a href="http://ads.rubiconproject.com" title="">ads.rubiconproject.com</a></td>
+<td>3</td>
+</tr>
+<tr>
+<td></td>
+<td>23.669</td>
+<td><a href="http://216.58.209.78" title="">216.58.209.78</a></td>
+<td><a href="http://apis.google.com" title="">apis.google.com</a></td>
+<td>7</td>
+</tr>
+<tr>
+<td></td>
+<td>351.359</td>
+<td><a href="http://46.137.92.249" title="">46.137.92.249</a></td>
+<td><a href="http://d.adroll.com" title="">d.adroll.com</a></td>
+<td>6</td>
+</tr>
+<tr>
+<td></td>
+<td>226.063</td>
+<td><a href="http://23.61.248.18" title="">23.61.248.18</a></td>
+<td><a href="http://di67.shoppingshadow.com" title="">di67.shoppingshadow.com</a></td>
+<td>3</td>
+</tr>
+<tr>
+<td></td>
+<td>278.647</td>
+<td><a href="http://216.58.209.67" title="">216.58.209.67</a></td>
+<td><a href="http://fonts.gstatic.com" title="">fonts.gstatic.com</a></td>
+<td>4</td>
+</tr>
+<tr>
+<td></td>
+<td>55.433</td>
+<td><a href="http://92.61.231.12" title="">92.61.231.12</a></td>
+<td><a href="http://images.primark.com" title="">images.primark.com</a></td>
+<td>15</td>
+</tr>
+<tr>
+<td></td>
+<td>0.288</td>
+<td><a href="http://192.168.178.38" title="">192.168.178.38</a></td>
+<td><a href="http://images.primark.com" title="">images.primark.com</a></td>
+<td>5</td>
+</tr>
+<tr>
+<td></td>
+<td>226.638</td>
+<td><a href="http://23.61.248.58" title="">23.61.248.58</a></td>
+<td><a href="http://img.shopping.com" title="">img.shopping.com</a></td>
+<td>9</td>
+</tr>
+<tr>
+<td></td>
+<td>204.378</td>
+<td><a href="http://2.16.153.57" title="">2.16.153.57</a></td>
+<td><a href="http://ir.ebaystatic.com" title="">ir.ebaystatic.com</a></td>
+<td>6</td>
+</tr>
+<tr>
+<td></td>
+<td>22.797</td>
+<td><a href="http://92.61.231.11" title="">92.61.231.11</a></td>
+<td><a href="http://m.primark.com" title="">m.primark.com</a></td>
+<td>18</td>
+</tr>
+<tr>
+<td></td>
+<td>226.891</td>
+<td><a href="http://23.0.213.206" title="">23.0.213.206</a></td>
+<td><a href="http://pixel.mathtag.com" title="">pixel.mathtag.com</a></td>
+<td>3</td>
+</tr>
+<tr>
+<td></td>
+<td>277.974</td>
+<td><a href="http://54.231.141.204" title="">54.231.141.204</a></td>
+<td><a href="http://s3-eu-west-1.amazonaws.com" title="">s3-eu-west-1.amazonaws.com</a></td>
+<td>18</td>
+</tr>
+<tr>
+<td></td>
+<td>204.569</td>
+<td><a href="http://23.206.112.91" title="">23.206.112.91</a></td>
+<td><a href="http://thumbs3.ebaystatic.com" title="">thumbs3.ebaystatic.com</a></td>
+<td>71</td>
+</tr>
+<tr>
+<td></td>
+<td>349.928</td>
+<td><a href="http://31.13.64.36" title="">31.13.64.36</a></td>
+<td><a href="http://www.facebook.com" title="">www.facebook.com</a></td>
+<td>3</td>
+</tr>
+<tr>
+<td></td>
+<td>276.809</td>
+<td><a href="http://134.213.58.117" title="">134.213.58.117</a></td>
+<td><a href="http://www.misspap.co.uk" title="">www.misspap.co.uk</a></td>
+<td>15</td>
+</tr>
+</table>
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  Limits per device&#39;s the api usage for each api to three.<br />
+  
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+11. Multiple Simultaneous Connections to Many Endpoints<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  It typically happens when a connection is not deliberately closed as part of the transmission and is terminated later when the connection times out.<br />
+  But it is very infficient to do in that way.
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  Closing connections promptly from app, this will reduce battery drain.<br />
+  
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+12. 3rd Party Scripts<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  Two 3rd party scripts synchronously load 3rd script from may make waiting time longer.
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  Make all scripts load asynchronously.<br />
+  
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+13. Asynchronous Load of JavaScript in HTML<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  Synchronous load script from the app server, either from <code>primark.com</code> or from <code>10.120.0.1</code>, make it longer waiting time.<br />
+<table>
+<tr>
+<th></th>
+<th>Time</th>
+<th>Host</th>
+</tr>
+<tr>
+<td></td>
+<td>21.769999980926514</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+</tr>
+<tr>
+<td></td>
+<td>49.84999990463257</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+</tr>
+<tr>
+<td></td>
+<td>129.13499999046326</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+</tr>
+<tr>
+<td></td>
+<td>166.7869999408722</td>
+<td><a href="http://10.120.0.1" title="">10.120.0.1</a></td>
+</tr>
+</table>
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  Make scripts from server load asynchronously.
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+14. Empty Source and Link Attributes<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  There are 39 files had HTML iframe, img, href, script, or link tags with empty link attributes. Many browsers still attempt to connect even if there is no url. This can cause delays in loading your site.
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  Preprocess the return HTML page, remove thos tags with empty link
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+15. HTTPS Usage<br />
+  <ul>
+<li>
+<p>
+* Problem:<br />
+  Video Optimizer discovered 483 non-HTTPS connections, which is 63% of all the TCP sessions.
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  Make all trasmition trasfered by HTTPS, all use other encrypt methods to protect transmition methods.
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+16. Weak Cipher<br />
+  <ul>
+<li>
+<p>
+* Problem: <br />
+  It seems that the app communicate to the google server with weak encryption methods.<br />
+<table>
+<tr>
+<th></th>
+<th>Destination IP</th>
+<th>Destination Port</th>
+<th>Cipher Name</th>
+<th>Cipher Hex</th>
+</tr>
+<tr>
+<td></td>
+<td><a href="http://64.233.161.188" title="">64.233.161.188</a></td>
+<td>5228</td>
+<td><code>RSA_EXPORT_WITH_DES40_CBC_SHA</code></td>
+<td>0x0008</td>
+</tr>
+<tr>
+<td></td>
+<td><a href="http://64.233.161.188" title="">64.233.161.188</a></td>
+<td>5228</td>
+<td><code>RSA_EXPORT_WITH_RC4_40_MD5</code></td>
+<td>0x0003</td>
+</tr>
+<tr>
+<td></td>
+<td><a href="http://64.233.161.188" title="">64.233.161.188</a></td>
+<td>5228</td>
+<td><code>DHE_DSS_EXPORT_WITH_DES40_CBC_SHA</code></td>
+<td>0x0011</td>
+</tr>
+<tr>
+<td></td>
+<td><a href="http://64.233.161.188" title="">64.233.161.188</a></td>
+<td>5228</td>
+<td><code>DHE_RSA_EXPORT_WITH_DES40_CBC_SHA</code></td>
+<td>0x0014</td>
+</tr>
+</table><br />
+  <br />
+  
+</p>
+</li>
+<li>
+<p>
+* Solution:<br />
+  Check through the app code throughly, to see if the app connect with 3rd party server with weak cipher. If it is with weak cipher, change the connection with strong cipher.
+</p>
+</li>
+</ul>
+</p>
+</li>
+</ol>
+<br />
+<h3 id = "3.2-analysis-for-marktplaats-trace">3.2 Analysis for Marktplaats trace</h3>
+<ol>
+<li>
+<p>
+1. Duplicate content<br />
+  <ul>
+<li>
+<p>
+- Problem: the same content is downloaded multiple times.
+</p>
+</li>
+<li>
+<p>
+- Solution: This problem often happens when 2 different uri’s point to the same resource, ensuring there is only one way to refer to a URI would solve the problem
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+2. Combine JS and CSS Requests<br />
+  <ul>
+<li>
+<p>
+- Problem: JS and CSS requests are separated
+</p>
+</li>
+<li>
+<p>
+- Solution: The solution is called ‘static content bundling’, given that these files are not user dependent, they can be minified and bundled (with e.g. webpack) at compile time. This improves speed and reduces network usage
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+3. Use CSS Sprites<br />
+  <ul>
+<li>
+<p>
+- Problem: many small files create a lot of http overhead, reducing page load time and increasing bandwidth usage
+</p>
+</li>
+<li>
+<p>
+- Solution: Use sprites, a file containing multiple tiny images, and then are split up by the css to only show the relevant parts 
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+4. Unnecessary Connections<br />
+  <ul>
+<li>
+<p>
+- Problem: Opens and closes multiple connections, which provides overhead compared to opening one connection and reusing it.
+</p>
+</li>
+<li>
+<p>
+- Solution: use connection keep alive 
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+5. Multiple Simultaneous connections to one endpoint<br />
+  <ul>
+<li>
+<p>
+- Problem: Multiple simultaneous connections produces overhead as it is almost always more efficient to sent one big package over 1 connection, then multiple small packages over multiple tiny connection. 
+</p>
+</li>
+<li>
+<p>
+- Solution: combine requests together into one package
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+6. 400 HTTP Status Response Code<br />
+  <ul>
+<li>
+<p>
+- Problem: 400 response codes indicate a client request error (e.g. non existent resource).
+</p>
+</li>
+<li>
+<p>
+- Solution: make sure all reference links are correct, and no non-existent pages are referred to
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+7. Asynchronous load of Javascript <br />
+  <ul>
+<li>
+<p>
+- Problem: javascript is loaded in the HEAD of the HTML, this blocks rendering of the rest of the page.  
+</p>
+</li>
+<li>
+<p>
+- Solution: Load javascript asynchronously, or in the body of the HTML.
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+8. File order<br />
+  <ul>
+<li>
+<p>
+- Problem: If the JS files are downloaded before the,  CSS files, the rendering of the body cannot happen in parallel with downloading.
+</p>
+</li>
+<li>
+<p>
+- Solution: Load CSS before JS
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+9. CSS Display: None<br />
+  <ul>
+<li>
+<p>
+- Problem: The objects are not shown, and ignored by the rendered, but they are downloaded.
+</p>
+</li>
+<li>
+<p>
+- Solution: remove all display none objects from the css files
+</p>
+</li>
+</ul>
+</p>
+</li>
+<li>
+<p>
+10. Not using HTTPS<br />
+  <ul>
+<li>
+<p>
+- Problem: HTTPS guarantees that the data is securely transmitted and authenticated, without using https these ⒠⒜⒜⒜guarantees are not met.
+</p>
+</li>
+<li>
+<p>
+- Solution: force redirects to the HTTPS version of the site
+</p>
+</li>
+</ul>
+</p>
+</li>
+</ol>
+
 </section>
 
 						</div>
@@ -78,6 +1772,15 @@
 										<h2>Sections</h2>
 									</header>
 <ul>
+<li>
+<span class="opener active"><a href="#performance-of-networked-systems-assignment-2" title="">Performance of Networked Systems Assignment 2</a></span>
+<ul>
+<li><a href="#homework-assignment-2" title="">Homework assignment 2</a></li>
+<li><a href="#question-1-discovering-networks" title="">Question 1 Discovering Networks</a></li>
+<li><a href="#question-2-deep-packet-analysis" title="">Question 2 Deep Packet Analysis</a></li>
+<li><a href="#question-3-performance-of-mobile-apps" title="">Question 3 Performance of Mobile Apps</a></li>
+</ul>
+</li>
 </ul>
                                 </nav>
 								<nav id="citation">

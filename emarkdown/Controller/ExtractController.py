@@ -59,6 +59,7 @@ class ExtractController:
         md_dict, unmd_dict = self.processor_dict["symmetry_block_processor"].process_immutable_tag(md_dict, unmd_dict)
         # 开始处理左侧区块 （包括 区块引用模块 及 列表引用模块）
         md_dict, unmd_dict = self.processor_dict["block_quotes_processor"].process_tag(md_dict, unmd_dict)
+        md_dict, unmd_dict = self.processor_dict["symmetry_inline_processor"].process_immutable_tag(md_dict, unmd_dict)
         # 开始处理列表区块
         md_dict = self.processor_dict["list_processor"].process_tag(md_dict)
         # audio/video/image tag/quotation/link html（避免之前的冲突）/ 在对称区块之前避免Link中文字被处理
@@ -74,7 +75,7 @@ class ExtractController:
         # 开始处理表格区块（无需容忍列表）
         md_dict = self.processor_dict["table_block_processor"].process_tag(md_dict)
         # 开始处理inline的区块们
-        md_dict, unmd_dict = self.processor_dict["symmetry_inline_processor"].process_immutable_tag(md_dict, unmd_dict)
+
         md_dict = self.processor_dict["header_processor"].process_tag(md_dict)
         md_dict = self.processor_dict["horizontal_rule_processor"].process_tag(md_dict)
         md_dict, citations_dict = self.processor_dict["citation_processor"].process_tag(md_dict)

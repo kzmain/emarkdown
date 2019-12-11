@@ -1,4 +1,5 @@
 import copy
+import html
 import pathlib
 import re
 
@@ -7,7 +8,7 @@ from bs4 import BeautifulSoup
 from emarkdown.Processor.ExtractProcessor.Config import TagConfig as Config, TagTypes
 from emarkdown.Processor.ExtractProcessor.Inline.CitationProcessor import CitationProcessor
 from emarkdown.Processor.ExtractProcessor.Inline.Media.MediaProcessor import MediaProcessor
-from emarkdown.System.Tool import HTML_Entities
+from emarkdown.System.Tool import HTML_Entities, UUID
 
 
 class ConverterController:
@@ -30,35 +31,33 @@ class ConverterController:
 
         menu = ConverterController.__make_menu_html(main_text)
         citation = ConverterController.__make_citation_html(citations_dict)
-
-
-
         return main_text, menu, citation
 
     @staticmethod
     def __md_dict_to_main_text(md_dict, main_text):
         tp_dict = copy.deepcopy(md_dict)
         loop_count = -1
-        while len(md_dict) > 0:
+
+        # TODO fix
+        process_time = 0
+        while len(md_dict) > 0 and process_time < 1000:
+            process_time += 1
             md_dict = copy.deepcopy(tp_dict)
             loop_count += 1
             for level, tag_pairs in md_dict.items():
                 for l_uuid, tag_dict in tag_pairs.items():
                     tag_text = tag_dict[Config.KEY_TEXT]
-                    tag_inline = tag_dict[Config.KEY_INLINE_FLAG]
-                    tag_type = tag_dict[Config.KEY_TYPE]
                     if l_uuid in main_text:
-                        if not tag_inline:
-                            space_level = loop_count + level - 1
-                            tag_text = re.sub("^", " " * space_level * ConverterController.BASIC_SPACE_NUM, tag_text,
-                                              flags=re.MULTILINE)
-                        if tag_type == TagTypes.TYPE_TABLE_TD or tag_type == TagTypes.TYPE_TABLE_TH:
-                            space_level = loop_count + level - 1
-                            tag_text = " " * space_level * ConverterController.BASIC_SPACE_NUM + tag_text
                         main_text = main_text.replace(l_uuid, tag_text)
                         tp_dict[level].pop(l_uuid)
                         if len(tp_dict[level]) == 0:
                             tp_dict.pop(level)
+        soup = BeautifulSoup(main_text)
+        tags = soup.findAll(re.compile(r'(h\d)'))
+        for tag in tags:
+            old_txt = str(tag.attrs["id"])
+            new_txt = html.escape(tag.getText()).replace(" ", "-").lower()
+            main_text = main_text.replace(old_txt, new_txt)
         return main_text
 
     @staticmethod
@@ -86,6 +85,8 @@ class ConverterController:
                     elif tag_type == TagTypes.TYPE_HORIZONTAL_RULE or tag_type == TagTypes.TYPE_BREAK_LINE:
                         input_dict[level][t_uuid][Config.KEY_TEXT] = "\n" + tag_type
                         continue
+                    # if tag_type == TagTypes.TYPE_HEADER:
+                    #     print()
                     # Prepare for process
                     tag_type = tag_dict[Config.KEY_TYPE]
                     tag_text = tag_dict[Config.KEY_TEXT]
@@ -99,15 +100,19 @@ class ConverterController:
                         tag_type = tag_dict[Config.KEY_SUB_TYPE] % tag_dict[Config.KEY_EXTENSION].lower()
                         tag_l = ConverterController.__generate_left_tag(tag_type, False)
                         tag_r = ConverterController.__generate_right_tag(tag_type, False)
+
+                        tag_text = re.sub(r"\n( )*\n", "\n", tag_text)
+                        tag_text = re.sub(r"\n", "<br />\n", tag_text)
                     # If <h1>, <h2>, <h3>, <h4>, <h5>, <h6>'s tag
                     elif header_match:
-                        tag_type = tag_type % tag_text.lower().replace(" ", "-")
+                        tag_type = tag_type % UUID.get_new_uuid()
                         tag_l = ConverterController.__generate_left_tag(tag_type, True)
                         tag_r = ConverterController.__generate_right_tag(tag_type, True)
                     # If <p> tag
                     if tag_type == TagTypes.TYPE_PARAGRAPH:
-                        tag_text = re.sub("^", " " * ConverterController.BASIC_SPACE_NUM, tag_text, flags=re.MULTILINE)
-
+                        # tag_text = re.sub("^", " " * ConverterController.BASIC_SPACE_NUM, tag_text, flags=re.MULTILINE)
+                        tag_text = re.sub(r"\n( )*\n", "\n", tag_text)
+                        tag_text = re.sub(r"\n", "<br />\n", tag_text)
                     tag_text = tag_l + tag_text + tag_r
                     input_dict[level][t_uuid][Config.KEY_TEXT] = tag_text
                 # Inline Type
@@ -124,6 +129,8 @@ class ConverterController:
                         title = ext_dict[MediaProcessor.KEY_TITLE]
                         m_type = pathlib.Path(link).suffix.replace(".", "", 1)
                         if tag_type == TagTypes.TYPE_LINK:
+                            if tag_text == "":
+                                tag_text = link
                             input_dict[level][t_uuid][Config.KEY_TEXT] = TagTypes.TYPE_LINK % \
                                                                          (link, title, tag_text)
                         elif tag_type == TagTypes.TYPE_IMAGE:
@@ -190,11 +197,11 @@ class ConverterController:
         has_h1 = False
         for count in range(len(tags)):
             c_tag = str(tags[count])
-            tag_id = tags[count].attrs["id"]\
-                .replace("\"", HTML_Entities.ENTITY_DICT["\""])\
+            tag_id = tags[count].attrs["id"] \
+                .replace("\"", HTML_Entities.ENTITY_DICT["\""]) \
                 .replace("\'", HTML_Entities.ENTITY_DICT["\'"])
-            tag_txt = tags[count].contents[0]\
-                .replace("\"", HTML_Entities.ENTITY_DICT["\""])\
+            tag_txt = tags[count].contents[0] \
+                .replace("\"", HTML_Entities.ENTITY_DICT["\""]) \
                 .replace("\'", HTML_Entities.ENTITY_DICT["\'"])
             if count < len(tags) - 1:
                 n_tag = str(tags[count + 1])

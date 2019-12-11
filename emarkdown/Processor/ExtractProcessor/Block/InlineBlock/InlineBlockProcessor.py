@@ -49,8 +49,9 @@ class InlineBlockProcessor:
 
                     match, b_txt, m_txt, a_txt = Bp.re_search_get_txt(in_txt, regx=self.tag_regx, flag=re.MULTILINE)
                     del new_uuid
-                # if self.tag_regx == r"n{2}":
-                #     tp_dict[level][tag_uuid][Config.KEY_TEXT] = tp_dict[level][tag_uuid][Config.KEY_TEXT].replace("\n", "")
+                # if self.tag_regx == r"\n{2}":
+                #     a = in_txt
+                #     tp_dict[level][tag_uuid][Config.KEY_TEXT] = md_dict[level][tag_uuid][Config.KEY_TEXT].replace("\n\n", "")
                 del match, b_txt, m_txt, a_txt, in_txt
                 del tag_uuid, tag_dict, tag_type
             del level, level_dict

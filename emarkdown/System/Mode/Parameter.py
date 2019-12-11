@@ -1,15 +1,14 @@
 # ---------------------------------------------------------------------------------------------------------------
 # PROCESSING_MODE (Compulsory)
-SIGNAL_RES_FILE = "-f"
-SIGNAL_DEST_FILE = "-d"
+SIGNAL_R_FILE = "-f"  # resource file URI 
+SIGNAL_D_FILE = "-d"  # destination file URI
 # MARKDOWN_MODE
-SIGNAL_E_MARKDOWN = "-emarkdown"
-SIGNAL_PURE_MARKDOWN = "-pmd"
-SIGNAL_HTML_MARKDOWN = "-hmd"
+SIGNAL_E_MARKDOWN = "-pmd"  # pure markdown mode
+SIGNAL_P_MARKDOWN = "-emd"  # e-markdown mode   
+SIGNAL_H_MARKDOWN = "-hmd"  # html markdown mode
 # HTML_MODE
-MODE_PURE_HTML = "-phtml"
-MODE_ALL_WEB_TECH = "-ahtml"
+SIGNAL_P_HTML = "-phtml"  # Return pure html
+SIGNAL_L_HTML = "-ahtml"  # Return full html with css/script
 # ---------------------------------------------------------------------------------------------------------------
 # CHANGE_LIB_MODE (Compulsory)
 SIGNAL_CHANGE_LIB = "-lib"
-
